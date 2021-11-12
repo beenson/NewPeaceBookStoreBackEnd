@@ -26,6 +26,9 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('register', [UserController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
     Route::get('logout', [UserController::class, 'logout']);
+});
 
-    Route::get('users', [UserController::class, 'users']);
+Route::group(['prefix' => 'user'], function () {
+    Route::get('/', [UserController::class, 'users']);
+    Route::get('/{id}', [UserController::class, 'user']);
 });
