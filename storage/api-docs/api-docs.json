@@ -7,6 +7,9 @@
     "paths": {
         "/api/auth/login": {
             "post": {
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "會員登入",
                 "operationId": "224ca9cc21e92b4e3291419882455b09",
                 "parameters": [
@@ -68,6 +71,9 @@
         },
         "/api/auth/register": {
             "post": {
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "會員註冊",
                 "operationId": "47d5ee6b3638073a988b692b1a5902cf",
                 "parameters": [
@@ -147,6 +153,9 @@
         },
         "/api/auth/": {
             "get": {
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "取得登入資訊",
                 "operationId": "65bf7215f7ed3548e4da8040d6ac35f9",
                 "responses": {
@@ -188,6 +197,9 @@
         },
         "/api/auth/logout": {
             "get": {
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "登出",
                 "operationId": "7a5010632f4dece406ddcc7c13e62b78",
                 "responses": {
@@ -211,6 +223,9 @@
         },
         "/api/user": {
             "get": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "使用者列表",
                 "operationId": "dcfdce57c12b8790024f232a8d3d6e1e",
                 "responses": {
@@ -256,6 +271,9 @@
         },
         "/api/user/{user_id}": {
             "get": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "使用者資訊",
                 "operationId": "8bde32bfdce9bf6dd150f5ccca2ac3f2",
                 "responses": {

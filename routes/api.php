@@ -16,7 +16,14 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+/**
+ * @OA\Tag(
+ *     name="Auth",
+ * )
+ * @OA\Tag(
+ *     name="User",
+ * )
+ */
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

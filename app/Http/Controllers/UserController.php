@@ -29,6 +29,7 @@ class UserController extends Controller
      *  @OA\Post(
      *      path="/api/auth/login",
      *      summary="會員登入",
+     *      tags={"Auth"},
      *      @OA\Parameter(
      *          name="email",
      *          in="query",
@@ -95,6 +96,7 @@ class UserController extends Controller
      *  @OA\Post(
      *      path="/api/auth/register",
      *      summary="會員註冊",
+     *      tags={"Auth"},
      *      @OA\Parameter(
      *          name="email",
      *          in="query",
@@ -186,6 +188,7 @@ class UserController extends Controller
      *  @OA\Get(
      *      path="/api/auth/",
      *      summary="取得登入資訊",
+     *      tags={"Auth"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
@@ -222,6 +225,7 @@ class UserController extends Controller
      *  @OA\Get(
      *      path="/api/auth/logout",
      *      summary="登出",
+     *      tags={"Auth"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
@@ -244,6 +248,7 @@ class UserController extends Controller
      *  @OA\Get(
      *      path="/api/user",
      *      summary="使用者列表",
+     *      tags={"User"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
@@ -283,6 +288,7 @@ class UserController extends Controller
      *  @OA\Get(
      *      path="/api/user/{user_id}",
      *      summary="使用者資訊",
+     *      tags={"User"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
