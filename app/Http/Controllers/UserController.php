@@ -21,8 +21,7 @@ class UserController extends Controller
         }
         $email = request()->get('email');
         $password = request()->get('password');
-        // TODO: password encrypt
-        $user = User::where('email', $email)->where('password', $password)->first();
+        $user = User::where('email', $email)->where('password', hash('sha512', $password))->first();
         if (!$user) {
             return response()->json(['status' => 0, 'message' => 'invalid credentials'], 401);
         }
@@ -45,7 +44,7 @@ class UserController extends Controller
         $user = new User();
         $user->email = $email;
         $user->name = $name;
-        $user->password = $password;
+        $user->password = hash('sha512', $password);
         $user->sid = $sid;
         $user->save();
         $jwt = JWTAuth::fromUser($user);
