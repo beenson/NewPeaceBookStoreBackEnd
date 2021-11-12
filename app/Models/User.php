@@ -21,6 +21,28 @@ class User extends Authenticatable implements JWTSubject {
         return true;
     }
 
+    public function getItems() {
+        return $this->hasMany(Item::class, 'owner', 'id')->get();
+    }
+
+    public function getComments() {
+        return $this->hasMany(Comment::class, 'user_id', 'id')->get();
+    }
+
+    public function getOrders() {
+        return $this->hasMany(Order::class, 'user_id', 'id')->get();
+    }
+
+    public function getBanRecords() {
+        return $this->hasMany(BanRecord::class, 'user_id', 'id')->get();
+    }
+
+    public function getMessages(User $targetUser) {
+        return Message::where('from_user', $this->id)->where('to_user', $targetUser->id)->orWhere(function ($query) use ($targetUser) {
+            $query->where('to_user', $this->id)->where('from_user', $targetUser->id);
+        })->get();
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
