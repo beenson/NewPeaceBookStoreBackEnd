@@ -9,6 +9,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements JWTSubject {
     use Notifiable;
 
+    public static function checkAvailible($email, $sid) {
+        $user = User::where('email', $email)->first();
+        if ($user !== null) {
+            return false;
+        }
+        $user = User::where('sid', $sid)->first();
+        if ($user !== null) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
