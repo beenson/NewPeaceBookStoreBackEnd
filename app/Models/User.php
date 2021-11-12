@@ -43,6 +43,10 @@ class User extends Authenticatable implements JWTSubject {
         })->get();
     }
 
+    public function getPhoneVerify() {
+        return $this->hasOne(PhoneVerify::class, 'user_id', 'id')->get()->first();
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
