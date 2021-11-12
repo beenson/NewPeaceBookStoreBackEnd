@@ -15,6 +15,9 @@ class UserController extends Controller
 
     public function login()
     {
+        if (!request()->has('email') || !request()->has('password')) {
+            return response()->json(['status' => 0, 'message' => 'bad request'], 400);
+        }
         $email = request()->get('email');
         $password = request()->get('password');
         // TODO: password encrypt
