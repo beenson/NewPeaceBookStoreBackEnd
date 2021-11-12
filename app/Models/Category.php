@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     protected $table = 'categories';
+
+    public function getItems() {
+        return $this->hasMany(Item::class, 'category', 'id')->get();
+    }
 }
