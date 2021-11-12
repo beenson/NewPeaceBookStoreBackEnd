@@ -11,6 +11,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api')->except(['login', 'register']);
+        $this->middleware('admin')->only(['users']);
     }
 
     public function login()
@@ -60,5 +61,9 @@ class UserController extends Controller
     {
         JWTAuth::parseToken()->invalidate();
         return response()->json(['status' => 1]);
+    }
+
+    public function users() {
+        return response()->json(['status' => 1, 'data' => User::get()]);
     }
 }
