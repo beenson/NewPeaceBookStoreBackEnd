@@ -9,6 +9,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements JWTSubject {
     use Notifiable;
 
+    public static $ADMIN = 1;
+    public static $BANNED = -1;
+    public static $NORMAL = 0;
+    public static $PUBLISHING_HOUSE = 0;
+
     public static function checkAvailible($email, $sid) {
         $user = User::where('email', $email)->first();
         if ($user !== null) {

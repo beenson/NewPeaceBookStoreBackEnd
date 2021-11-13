@@ -11,7 +11,7 @@
                     "Auth"
                 ],
                 "summary": "會員登入",
-                "operationId": "224ca9cc21e92b4e3291419882455b09",
+                "operationId": "8dcb70df1020986038d098cc08d05dae",
                 "parameters": [
                     {
                         "name": "email",
@@ -75,7 +75,7 @@
                     "Auth"
                 ],
                 "summary": "會員註冊",
-                "operationId": "47d5ee6b3638073a988b692b1a5902cf",
+                "operationId": "d764dd091cc4494ae0baf360b03319f3",
                 "parameters": [
                     {
                         "name": "email",
@@ -120,7 +120,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "status": 0,
+                                    "status": 1,
                                     "token": "aabbcc"
                                 }
                             }
@@ -157,7 +157,7 @@
                     "Auth"
                 ],
                 "summary": "取得登入資訊",
-                "operationId": "65bf7215f7ed3548e4da8040d6ac35f9",
+                "operationId": "98782e40ab294752958a37adbadd0a5d",
                 "responses": {
                     "200": {
                         "description": "成功",
@@ -201,7 +201,7 @@
                     "Auth"
                 ],
                 "summary": "登出",
-                "operationId": "7a5010632f4dece406ddcc7c13e62b78",
+                "operationId": "a8dd056be3e98a38c657f73ed6cdef2d",
                 "responses": {
                     "200": {
                         "description": "成功",
@@ -209,6 +209,89 @@
                             "application/json": {
                                 "example": {
                                     "status": 1
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/orders": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "訂單紀錄",
+                "operationId": "3d52aa29e9a87a39614334e40d3c5050",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "user_id": 1,
+                                            "status": 1,
+                                            "total_price": 100,
+                                            "created_at": null,
+                                            "updated_at": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/{id}/orders": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "會員訂單紀錄",
+                "operationId": "9d7b1a365d25e8b27db78493c077717e",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "user_id": 1,
+                                            "status": 1,
+                                            "total_price": 100,
+                                            "created_at": null,
+                                            "updated_at": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "失敗(會員不存在)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "user not found"
                                 }
                             }
                         }
@@ -267,15 +350,104 @@
                         "bearerAuth": []
                     }
                 ]
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "添加會員",
+                "operationId": "d09e58c211474a2ec5066f0cf6330a11",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "信箱",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "密碼",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "名稱",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sid",
+                        "in": "query",
+                        "description": "學號",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "新增成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": {
+                                        "id": 1,
+                                        "name": "1",
+                                        "email": "1",
+                                        "role": 0,
+                                        "sid": "3",
+                                        "remember_token": null,
+                                        "created_at": "2021-11-12T15:15:10.000000Z",
+                                        "updated_at": "2021-11-12T15:15:10.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "失敗(使用者重複)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "duplicate user"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "失敗(請求格式錯誤)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "bad request"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
-        "/api/user/{user_id}": {
+        "/api/user/{id}": {
             "get": {
                 "tags": [
                     "User"
                 ],
                 "summary": "使用者資訊",
-                "operationId": "8bde32bfdce9bf6dd150f5ccca2ac3f2",
+                "operationId": "8569f7c74e0c86a024a969c8691d3ed1",
                 "responses": {
                     "200": {
                         "description": "成功",
@@ -314,17 +486,72 @@
                         "bearerAuth": []
                     }
                 ]
-            }
-        }
-    },
-    "components": {
-        "securitySchemes": {
-            "bearerAuth": {
-                "type": "http",
-                "name": "bearerAuth",
-                "in": "header",
-                "bearerFormat": "JWT",
-                "scheme": "bearer"
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "修改會員資訊",
+                "operationId": "0c3a70ac5b05d1923ee03be654c0c639",
+                "parameters": [
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "密碼",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "名稱",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "description": "權限",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "修改成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": {
+                                        "id": 1,
+                                        "name": "1",
+                                        "email": "1",
+                                        "role": 0,
+                                        "sid": "3",
+                                        "remember_token": null,
+                                        "created_at": "2021-11-12T15:15:10.000000Z",
+                                        "updated_at": "2021-11-12T15:15:10.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "失敗(會員不存在)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "user not found"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     },
