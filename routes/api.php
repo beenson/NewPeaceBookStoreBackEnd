@@ -51,14 +51,24 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
     Route::get('logout', [AuthController::class, 'logout']);
+    Route::post('bindPhone', [AuthController::class, 'bindPhone']);
+    Route::post('verifyPhone', [AuthController::class, 'verifyPhone']);
 
     Route::get('/orders', [OrderController::class, 'authOrders']);
+    Route::get('/order/{id}', [OrderController::class, 'authOrder']);
 });
 
 /**
  * 管理使用者
  * @OA\Tag(
  *     name="User",
+ * )
+ */
+
+/**
+ * 訂單
+ * @OA\Tag(
+ *     name="Order",
  * )
  */
 Route::group(['prefix' => 'user'], function () {
@@ -68,4 +78,5 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('/{id}', [UserController::class, 'updateUser']);
 
     Route::get('/{id}/orders', [OrderController::class, 'userOrders']);
+    Route::get('/{id}/order/{oid}', [OrderController::class, 'userOrder']);
 });

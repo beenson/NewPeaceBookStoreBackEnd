@@ -10,14 +10,14 @@ class OrderController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api')->except([]);
-        $this->middleware('admin')->only(['userOrders']);
+        $this->middleware('admin')->only(['userOrders', 'userOrder']);
     }
 
     /**
      *  @OA\Get(
      *      path="/api/auth/orders",
      *      summary="訂單紀錄",
-     *      tags={"Auth"},
+     *      tags={"Order"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
@@ -45,9 +45,63 @@ class OrderController extends Controller
     }
     /**
      *  @OA\Get(
+     *      path="/api/auth/order/{oid}",
+     *      summary="指定訂單紀錄",
+     *      tags={"Order"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "data": {
+     *                      "id": 1,
+     *                      "user_id": 1,
+     *                      "status": 1,
+     *                      "total_price": 100,
+     *                      "created_at": null,
+     *                      "updated_at": null
+     *                  }
+     *              }
+     *          )
+     *      }),
+     *      @OA\Response(response=404, description="失敗(訂單不存在)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "order not found"
+     *              }
+     *          )
+     *      }),
+     *      @OA\Response(response=400, description="失敗(訂單不屬於此會員)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "order not found"
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function authOrder() {
+        $user = auth()->user();
+        $oid = request()->route('id');
+        $order = Order::find($oid);
+        if ($order === null) {
+            return response()->json(['status' => 0, 'message' => 'order not found'], 404);
+        }
+        if ($order->user_id !== $user->id) {
+            return response()->json(['status' => 0, 'message' => 'order not found'], 404);
+        }
+        return response()->json(['status' => 1, 'data' => $order]);
+    }
+    /**
+     *  @OA\Get(
      *      path="/api/user/{id}/orders",
      *      summary="會員訂單紀錄",
-     *      tags={"User"},
+     *      tags={"Order"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
@@ -85,5 +139,60 @@ class OrderController extends Controller
             return response()->json(['status' => 0, 'message' => 'user not found'], 404);
         }
         return response()->json(['status' => 1, 'data' => $user->getOrders()]);
+    }
+
+    /**
+     *  @OA\Get(
+     *      path="/api/user/{id}/order/{oid}",
+     *      summary="會員指定訂單紀錄",
+     *      tags={"Order"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "data": {
+     *                      "id": 1,
+     *                      "user_id": 1,
+     *                      "status": 1,
+     *                      "total_price": 100,
+     *                      "created_at": null,
+     *                      "updated_at": null
+     *                  }
+     *              }
+     *          )
+     *      }),
+     *      @OA\Response(response=404, description="失敗(訂單不存在)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "order not found"
+     *              }
+     *          )
+     *      }),
+     *      @OA\Response(response=403, description="失敗(訂單不屬於此會員)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "order not belongs this user"
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function userOrder() {
+        $uid = request()->route('id');
+        $oid = request()->route('oid');
+        $order = Order::find($oid);
+        if ($order === null) {
+            return response()->json(['status' => 0, 'message' => 'order not found'], 404);
+        }
+        if ($order->user_id !== $uid) {
+            return response()->json(['status' => 0, 'message' => 'order not belongs this user'], 401);
+        }
+        return response()->json(['status' => 1, 'data' => $order]);
     }
 }

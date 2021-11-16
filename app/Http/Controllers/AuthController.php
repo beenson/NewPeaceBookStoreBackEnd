@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PhoneVerify;
 use App\Models\User;
+use App\Services\SMSService;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -227,6 +229,141 @@ class AuthController extends Controller
     public function logout()
     {
         JWTAuth::parseToken()->invalidate();
+        return response()->json(['status' => 1]);
+    }
+
+    /**
+     *  @OA\Post(
+     *      path="/api/auth/bindPhone",
+     *      summary="綁定手機",
+     *      tags={"Auth"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *          name="phone",
+     *          in="query",
+     *          description="手機號碼",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1
+     *              }
+     *          )
+     *      }),
+     *      @OA\Response(response=401, description="失敗(已綁定手機)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "already bind phone"
+     *              }
+     *          )
+     *      }),
+     *      @OA\Response(response=400, description="失敗(手機號碼錯誤)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "phone format error"
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function bindPhone()
+    {
+        $user = auth()->user();
+        $phone = request()->get('phone');
+        if ($user->getPhoneVerify() !== null) {
+            return response()->json(['status' => 0, 'message' => 'already bind phone'], 400);
+        }
+        if (strlen($phone) != 10) {
+            // TODO: 正規驗證
+            return response()->json(['status' => 0, 'message' => 'phone format error'], 400);
+        }
+        // TODO: 手機被重複使用?
+        $verify = new PhoneVerify;
+        $user->phone = $phone;
+        $verify->user_id = $user->id;
+        $verify->status = PhoneVerify::$STATUS_BIND_PHONE;
+        $verify->code = SMSService::generateRandCode();
+        $verify->save();
+        SMSService::sendMessage($phone, '驗證碼: '. $phone);
+        return response()->json(['status' => 1]);
+    }
+
+    /**
+     *  @OA\Post(
+     *      path="/api/auth/verifyPhone",
+     *      summary="驗證手機",
+     *      tags={"Auth"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *          name="phone",
+     *          in="query",
+     *          description="驗證碼",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1
+     *              }
+     *          )
+     *      }),
+     *      @OA\Response(response=403, description="失敗(未綁定手機)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "not bind phone yet"
+     *              }
+     *          )
+     *      }),
+     *      @OA\Response(response=400, description="失敗(已驗證成功)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "had verify phone"
+     *              }
+     *          )
+     *      }),
+     *      @OA\Response(response=401, description="失敗(驗證碼錯誤)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "error code"
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function verifyPhone() {
+        $user = auth()->user();
+        $code = request()->get('code');
+        $verify = $user->getPhoneVerify();
+        if ($verify == null) {
+            return response()->json(['status' => 0, 'message' => 'not bind phone yet'], 400);
+        }
+        if ($verify->status == PhoneVerify::$STATUS_VERIFIED_PHONE) {
+            return response()->json(['status' => 0, 'message' => 'had verify phone'], 400);
+        }
+        if (strcmp($code, $verify->code) != 0) {
+            return response()->json(['status' => 0, 'message' => 'error code'], 400);
+        }
+        $verify->status = PhoneVerify::$STATUS_VERIFIED_PHONE;
+        $verify->save();
         return response()->json(['status' => 1]);
     }
 }

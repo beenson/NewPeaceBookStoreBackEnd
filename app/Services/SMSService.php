@@ -2,6 +2,14 @@
 namespace App\Services;
 
 class SMSService {
+
+    public static function generateRandCode() {
+        $txt = "QAZWSXEDCRFVGBHNUJMIKLOP1234567890";
+        $code = "";
+        for($i=0; $i<6; $i++) {
+            $code .= $txt[rand(0, strlen($txt)-1)];
+        }
+    }
     public static function sendVerifyMessage($phone, $code) {
         $msg = "牛脾趾書城會員驗證碼: ".$code."";
         return SMSService::sendMessage($phone, $msg);
