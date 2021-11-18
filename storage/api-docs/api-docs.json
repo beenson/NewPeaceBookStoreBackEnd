@@ -355,7 +355,7 @@
                 "tags": [
                     "Auth"
                 ],
-                "summary": "驗證手機",
+                "summary": "修改個人資訊",
                 "operationId": "ef4b62a4b3623c95f5851a4e338da239",
                 "parameters": [
                     {
@@ -401,6 +401,197 @@
                                 "example": {
                                     "status": 0,
                                     "message": "error oldPassword"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/banRecords": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "個人違規紀錄",
+                "operationId": "3230095d5c36898c3dcf28b3ac170707",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "user_id": 1,
+                                            "reason": "123456",
+                                            "duration": "2021-11-12 22:14:56",
+                                            "created_at": null,
+                                            "updated_at": null
+                                        },
+                                        {
+                                            "id": 2,
+                                            "user_id": 2,
+                                            "reason": "hacker",
+                                            "duration": "2021-11-12 22:14:56",
+                                            "created_at": null,
+                                            "updated_at": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/ban_record": {
+            "get": {
+                "tags": [
+                    "BanRecord"
+                ],
+                "summary": "近三十天的違規紀錄",
+                "operationId": "7f99ccbafa158f2a9afa235a23e541f5",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "user_id": 1,
+                                            "reason": "123456",
+                                            "duration": "2021-11-12 22:14:56",
+                                            "created_at": null,
+                                            "updated_at": null
+                                        },
+                                        {
+                                            "id": 2,
+                                            "user_id": 2,
+                                            "reason": "hacker",
+                                            "duration": "2021-11-12 22:14:56",
+                                            "created_at": null,
+                                            "updated_at": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/{id}/banRecords": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "指定使用者的違規紀錄",
+                "operationId": "ace9350b1170b7f5a81b4ce5ff8be869",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "user_id": 1,
+                                            "reason": "123456",
+                                            "duration": "2021-11-12 22:14:56",
+                                            "created_at": null,
+                                            "updated_at": null
+                                        },
+                                        {
+                                            "id": 2,
+                                            "user_id": 2,
+                                            "reason": "hacker",
+                                            "duration": "2021-11-12 22:14:56",
+                                            "created_at": null,
+                                            "updated_at": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "失敗(會員不存在)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "user not found"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/{id}/ban": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "封鎖指定使用者",
+                "operationId": "deab4fbbf4f6667e5a458c7973632027",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "失敗(會員不存在)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "user not found"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "失敗(請求格式錯誤)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "error Input"
                                 }
                             }
                         }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\BanRecordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 header('Access-Control-Allow-Origin: *');
@@ -59,17 +60,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  *     name="Order",
  * )
  */
+/**
+ * 違規紀錄管理
+ * @OA\Tag(
+ *     name="BanRecord",
+ * )
+ */
 Route::group(['prefix' => 'auth'], function () {
     Route::get('/', [AuthController::class, 'me']);
-    Route::post('register', [AuthController::class, 'register']);
-    Route::post('login', [AuthController::class, 'login']);
-    Route::get('logout', [AuthController::class, 'logout']);
-    Route::post('bindPhone', [AuthController::class, 'bindPhone']);
-    Route::post('verifyPhone', [AuthController::class, 'verifyPhone']);
-    Route::post('editProfile', [AuthController::class, 'editProfile']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/logout', [AuthController::class, 'logout']);
+    Route::post('/bindPhone', [AuthController::class, 'bindPhone']);
+    Route::post('/verifyPhone', [AuthController::class, 'verifyPhone']);
+    Route::post('/editProfile', [AuthController::class, 'editProfile']);
 
     Route::get('/orders', [OrderController::class, 'authOrders']);
     Route::get('/order/{id}', [OrderController::class, 'authOrder']);
+
+    Route::get('/banRecords', [BanRecordController::class, 'getMyBanRecords']);
 });
 
 Route::group(['prefix' => 'user'], function () {
@@ -80,4 +89,12 @@ Route::group(['prefix' => 'user'], function () {
 
     Route::get('/{id}/orders', [OrderController::class, 'userOrders']);
     Route::get('/{id}/order/{oid}', [OrderController::class, 'userOrder']);
+    Route::get('/{id}/banRecords', [BanRecordController::class, 'getBanRecordsByUser']);
+    Route::post('/{id}/ban', [BanRecordController::class, 'banUser']);
+});
+
+Route::group(['prefix' => 'ban_record'], function () {
+    Route::get('/', [BanRecordController::class, 'getBanRecords']);
+    Route::post('/{id}/update', [BanRecordController::class, 'updateRecord']);
+    Route::post('/{id}/delete', [BanRecordController::class, 'deleteRecord']);
 });
