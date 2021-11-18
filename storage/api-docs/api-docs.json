@@ -350,6 +350,69 @@
                 ]
             }
         },
+        "/api/auth/editProfile": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "驗證手機",
+                "operationId": "ef4b62a4b3623c95f5851a4e338da239",
+                "parameters": [
+                    {
+                        "name": "oldPassword",
+                        "in": "query",
+                        "description": "舊密碼",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "新密碼",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "新名稱",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "失敗(舊密碼錯誤)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "error oldPassword"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/auth/orders": {
             "get": {
                 "tags": [

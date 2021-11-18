@@ -366,4 +366,69 @@ class AuthController extends Controller
         $verify->save();
         return response()->json(['status' => 1]);
     }
+
+    /**
+     *  @OA\Post(
+     *      path="/api/auth/editProfile",
+     *      summary="修改個人資訊",
+     *      tags={"Auth"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *          name="oldPassword",
+     *          in="query",
+     *          description="舊密碼",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="password",
+     *          in="query",
+     *          description="新密碼",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="name",
+     *          in="query",
+     *          description="新名稱",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1
+     *              }
+     *          )
+     *      }),
+     *      @OA\Response(response=400, description="失敗(舊密碼錯誤)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "error oldPassword"
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function editProfile() {
+        $user = auth()->user();
+        if (request()->has('password')) {
+            $oldPassword = request()->get('oldPassword');
+            $password = request()->get('password');
+            if (hash('sha512',$oldPassword) !== $user->password) {
+                return response()->json(['status' => 0, 'message' => 'error oldPassword'], 400);
+            }
+        }
+        if (request()->has('name')) {
+            $user->name = request()->get('name');
+        }
+        $user->save();
+        return response()->json(['status' => 1]);
+    }
 }

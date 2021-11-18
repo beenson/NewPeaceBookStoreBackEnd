@@ -46,18 +46,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  *     name="Auth",
  * )
  */
-Route::group(['prefix' => 'auth'], function () {
-    Route::get('/', [AuthController::class, 'me']);
-    Route::post('register', [AuthController::class, 'register']);
-    Route::post('login', [AuthController::class, 'login']);
-    Route::get('logout', [AuthController::class, 'logout']);
-    Route::post('bindPhone', [AuthController::class, 'bindPhone']);
-    Route::post('verifyPhone', [AuthController::class, 'verifyPhone']);
-
-    Route::get('/orders', [OrderController::class, 'authOrders']);
-    Route::get('/order/{id}', [OrderController::class, 'authOrder']);
-});
-
 /**
  * 管理使用者
  * @OA\Tag(
@@ -71,6 +59,19 @@ Route::group(['prefix' => 'auth'], function () {
  *     name="Order",
  * )
  */
+Route::group(['prefix' => 'auth'], function () {
+    Route::get('/', [AuthController::class, 'me']);
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('login', [AuthController::class, 'login']);
+    Route::get('logout', [AuthController::class, 'logout']);
+    Route::post('bindPhone', [AuthController::class, 'bindPhone']);
+    Route::post('verifyPhone', [AuthController::class, 'verifyPhone']);
+    Route::post('editProfile', [AuthController::class, 'editProfile']);
+
+    Route::get('/orders', [OrderController::class, 'authOrders']);
+    Route::get('/order/{id}', [OrderController::class, 'authOrder']);
+});
+
 Route::group(['prefix' => 'user'], function () {
     Route::get('/', [UserController::class, 'users']);
     Route::post('/', [UserController::class, 'createUser']);
