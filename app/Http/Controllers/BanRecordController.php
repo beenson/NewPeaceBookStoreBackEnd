@@ -144,6 +144,24 @@ class BanRecordController extends Controller
      *      summary="封鎖指定使用者",
      *      tags={"User"},
      *      security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *          name="reason",
+     *          in="query",
+     *          description="原因",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="duration",
+     *          in="query",
+     *          description="封鎖期限",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="timestamp"
+     *          )
+     *      ),
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -198,6 +216,24 @@ class BanRecordController extends Controller
      *      summary="修改封鎖紀錄",
      *      tags={"BanRecord"},
      *      security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *          name="reason",
+     *          in="query",
+     *          description="原因",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="duration",
+     *          in="query",
+     *          description="封鎖時限",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="timestamp"
+     *          )
+     *      ),
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
      *              mediaType="application/json",

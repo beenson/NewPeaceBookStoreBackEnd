@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BanRecordController;
+use App\Http\Controllers\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 header('Access-Control-Allow-Origin: *');
@@ -66,6 +67,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  *     name="BanRecord",
  * )
  */
+/**
+ * 類型標籤
+ * @OA\Tag(
+ *     name="Tag",
+ * )
+ */
 Route::group(['prefix' => 'auth'], function () {
     Route::get('/', [AuthController::class, 'me']);
     Route::post('/register', [AuthController::class, 'register']);
@@ -97,4 +104,11 @@ Route::group(['prefix' => 'ban_record'], function () {
     Route::get('/', [BanRecordController::class, 'getBanRecords']);
     Route::post('/{id}/update', [BanRecordController::class, 'updateRecord']);
     Route::post('/{id}/delete', [BanRecordController::class, 'deleteRecord']);
+});
+
+Route::group(['prefix' => 'tag'], function () {
+    Route::get('/search', [TagController::class, 'searchTags']);
+    Route::post('/create', [TagController::class, 'createTag']);
+    Route::get('/{id}/items', [TagController::class, 'getRelationItems']);
+    Route::post('/{id}/delete', [TagController::class, 'deleteTag']);
 });

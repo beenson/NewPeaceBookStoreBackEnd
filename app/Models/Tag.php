@@ -10,6 +10,10 @@ class Tag extends Model
     protected $table = 'tags';
 
     public function getItems() {
-        return $this->hasMany(ItemTag::class, 'tag_id', 'id')->get();
+        return $this->belongsToMany(Item::class, 'item_tags', 'item_id', 'tag_id')->get();
+    }
+
+    public function checkDuplicateName($name) {
+        return Tag::where('name', $name)->get()->count() > 0;
     }
 }
