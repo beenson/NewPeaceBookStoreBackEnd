@@ -12,4 +12,8 @@ class Category extends Model
     public function getItems() {
         return $this->hasMany(Item::class, 'category', 'id')->get();
     }
+
+    public static function checkDuplicateName($name) {
+        return Category::where('name', $name)->get()->count() > 0;
+    }
 }

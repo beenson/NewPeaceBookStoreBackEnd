@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BanRecordController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 header('Access-Control-Allow-Origin: *');
@@ -68,9 +69,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  * )
  */
 /**
- * 類型標籤
+ * 標籤
  * @OA\Tag(
  *     name="Tag",
+ * )
+ */
+/**
+ * 分類
+ * @OA\Tag(
+ *     name="Category",
  * )
  */
 Route::group(['prefix' => 'auth'], function () {
@@ -111,4 +118,11 @@ Route::group(['prefix' => 'tag'], function () {
     Route::post('/create', [TagController::class, 'createTag']);
     Route::get('/{id}/items', [TagController::class, 'getRelationItems']);
     Route::post('/{id}/delete', [TagController::class, 'deleteTag']);
+});
+
+Route::group(['prefix' => 'category'], function () {
+    Route::get('/list', [CategoryController::class, 'categorys']);
+    Route::post('/create', [CategoryController::class, 'createCategory']);
+    Route::get('/{id}/items', [CategoryController::class, 'getCategoryItems']);
+    Route::post('/{id}/delete', [CategoryController::class, 'deleteCategory']);
 });

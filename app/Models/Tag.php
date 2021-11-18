@@ -13,7 +13,7 @@ class Tag extends Model
         return $this->belongsToMany(Item::class, 'item_tags', 'item_id', 'tag_id')->get();
     }
 
-    public function checkDuplicateName($name) {
+    public static function checkDuplicateName($name) {
         return Tag::where('name', $name)->get()->count() > 0;
     }
 }

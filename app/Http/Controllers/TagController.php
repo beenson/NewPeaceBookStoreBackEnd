@@ -159,26 +159,11 @@ class TagController extends Controller
      *      summary="刪除標籤",
      *      tags={"Tag"},
      *      security={{"bearerAuth":{}}},
-     *      @OA\Parameter(
-     *          name="name",
-     *          in="query",
-     *          description="標籤名稱",
-     *          required=true,
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              example={
-     *                  "status": 1,
-     *                  "data":{
-     *                      "id": 1,
-     *                      "name": "tag-1",
-     *                      "created_at": "2021-11-12T15:15:10.000000Z",
-     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
-     *                  }
+     *                  "status": 1
      *              }
      *          )
      *      }),
