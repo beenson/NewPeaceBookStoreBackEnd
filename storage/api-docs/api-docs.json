@@ -848,6 +848,17 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "失敗(請求格式錯誤)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "error Input"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -882,6 +893,437 @@
                                 "example": {
                                     "status": 0,
                                     "message": "category not found"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/items": {
+            "get": {
+                "tags": [
+                    "Item"
+                ],
+                "summary": "查詢自己的商品",
+                "operationId": "a91bbf4c6f371cb4daaf58d547412145",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "owner": 1,
+                                            "category": 1,
+                                            "name": "Book Name",
+                                            "ISBN": "3333-1111-2222-1234",
+                                            "price": 100,
+                                            "quantity": 1,
+                                            "created_at": "2021-11-12T15:15:10.000000Z",
+                                            "updated_at": "2021-11-12T15:15:10.000000Z"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "owner": 2,
+                                            "category": 2,
+                                            "name": "Book Name2",
+                                            "ISBN": "3333-1111-2222-1234",
+                                            "price": 800,
+                                            "quantity": 2,
+                                            "created_at": "2021-11-12T15:15:10.000000Z",
+                                            "updated_at": "2021-11-12T15:15:10.000000Z"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/{id}/items": {
+            "get": {
+                "tags": [
+                    "Item"
+                ],
+                "summary": "查詢他人的商品",
+                "operationId": "b4958933a5cd0decebe0b89b31f26546",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "owner": 1,
+                                            "category": 1,
+                                            "name": "Book Name",
+                                            "ISBN": "3333-1111-2222-1234",
+                                            "price": 100,
+                                            "quantity": 1,
+                                            "created_at": "2021-11-12T15:15:10.000000Z",
+                                            "updated_at": "2021-11-12T15:15:10.000000Z"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "owner": 2,
+                                            "category": 2,
+                                            "name": "Book Name2",
+                                            "ISBN": "3333-1111-2222-1234",
+                                            "price": 800,
+                                            "quantity": 2,
+                                            "created_at": "2021-11-12T15:15:10.000000Z",
+                                            "updated_at": "2021-11-12T15:15:10.000000Z"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/item/create": {
+            "post": {
+                "tags": [
+                    "Item"
+                ],
+                "summary": "新增商品",
+                "operationId": "feee111b66653a425769da1e569e25bf",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "商品名稱",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "ISBN",
+                        "in": "query",
+                        "description": "ISBN",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "price",
+                        "in": "query",
+                        "description": "價格",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "存量",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": {
+                                        "id": 1,
+                                        "owner": 1,
+                                        "category": 1,
+                                        "name": "Book Name",
+                                        "ISBN": "3333-1111-2222-1234",
+                                        "price": 100,
+                                        "quantity": 1,
+                                        "created_at": "2021-11-12T15:15:10.000000Z",
+                                        "updated_at": "2021-11-12T15:15:10.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "失敗(請求格式錯誤)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "error Input"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/item/{id}/update": {
+            "post": {
+                "tags": [
+                    "Item"
+                ],
+                "summary": "修改商品 (擁有者&管理員可用)",
+                "operationId": "78cd7a8f62b3c1c92a4ff1d9ee2eabf9",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "商品名稱",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "ISBN",
+                        "in": "query",
+                        "description": "ISBN",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "price",
+                        "in": "query",
+                        "description": "價格",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "存量",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": {
+                                        "id": 1,
+                                        "owner": 1,
+                                        "category": 1,
+                                        "name": "Book Name",
+                                        "ISBN": "3333-1111-2222-1234",
+                                        "price": 100,
+                                        "quantity": 1,
+                                        "created_at": "2021-11-12T15:15:10.000000Z",
+                                        "updated_at": "2021-11-12T15:15:10.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "失敗(請求格式錯誤)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "error Input"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/item/{id}/delete": {
+            "post": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "刪除商品 (擁有者&管理員可用)",
+                "operationId": "d3e4b3a4edb8bb9ff01585051728c953",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "失敗(商品不存在或不具執行權限)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "item not found"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/item/searchISBN": {
+            "get": {
+                "tags": [
+                    "Item"
+                ],
+                "summary": "以ISBN搜尋",
+                "operationId": "ea73556564b1850acd2587db23e54433",
+                "parameters": [
+                    {
+                        "name": "ISBN",
+                        "in": "query",
+                        "description": "ISBN",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "owner": 1,
+                                            "category": 1,
+                                            "name": "Book Name",
+                                            "ISBN": "3333-1111-2222-1234",
+                                            "price": 100,
+                                            "quantity": 1,
+                                            "created_at": "2021-11-12T15:15:10.000000Z",
+                                            "updated_at": "2021-11-12T15:15:10.000000Z"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "owner": 2,
+                                            "category": 2,
+                                            "name": "Book Name2",
+                                            "ISBN": "3333-1111-2222-1234",
+                                            "price": 800,
+                                            "quantity": 2,
+                                            "created_at": "2021-11-12T15:15:10.000000Z",
+                                            "updated_at": "2021-11-12T15:15:10.000000Z"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/item/search": {
+            "get": {
+                "tags": [
+                    "Item"
+                ],
+                "summary": "關鍵字搜尋",
+                "operationId": "5c0b50675ef1221c56507f1bd8953ee3",
+                "parameters": [
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "description": "關鍵字",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "owner": 1,
+                                            "category": 1,
+                                            "name": "Book Name",
+                                            "ISBN": "3333-1111-2222-1234",
+                                            "price": 100,
+                                            "quantity": 1,
+                                            "created_at": "2021-11-12T15:15:10.000000Z",
+                                            "updated_at": "2021-11-12T15:15:10.000000Z"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "owner": 2,
+                                            "category": 2,
+                                            "name": "Book Name2",
+                                            "ISBN": "3333-1111-2222-1234",
+                                            "price": 800,
+                                            "quantity": 2,
+                                            "created_at": "2021-11-12T15:15:10.000000Z",
+                                            "updated_at": "2021-11-12T15:15:10.000000Z"
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -1227,6 +1669,17 @@
                                 "example": {
                                     "status": 0,
                                     "message": "duplicate tag name"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "失敗(請求格式錯誤)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "error Input"
                                 }
                             }
                         }

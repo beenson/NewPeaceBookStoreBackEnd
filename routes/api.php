@@ -6,6 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BanRecordController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 header('Access-Control-Allow-Origin: *');
@@ -80,6 +81,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  *     name="Category",
  * )
  */
+/**
+ * 商品
+ * @OA\Tag(
+ *     name="Item",
+ * )
+ */
 Route::group(['prefix' => 'auth'], function () {
     Route::get('/', [AuthController::class, 'me']);
     Route::post('/register', [AuthController::class, 'register']);
@@ -93,6 +100,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('/order/{id}', [OrderController::class, 'authOrder']);
 
     Route::get('/banRecords', [BanRecordController::class, 'getMyBanRecords']);
+    Route::get('/items', [ItemController::class, 'getAuthItems']);
 });
 
 Route::group(['prefix' => 'user'], function () {
@@ -105,6 +113,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/{id}/order/{oid}', [OrderController::class, 'userOrder']);
     Route::get('/{id}/banRecords', [BanRecordController::class, 'getBanRecordsByUser']);
     Route::post('/{id}/ban', [BanRecordController::class, 'banUser']);
+    Route::get('/{id}/items', [ItemController::class, 'getUserItems']);
 });
 
 Route::group(['prefix' => 'ban_record'], function () {
@@ -125,4 +134,13 @@ Route::group(['prefix' => 'category'], function () {
     Route::post('/create', [CategoryController::class, 'createCategory']);
     Route::get('/{id}/items', [CategoryController::class, 'getCategoryItems']);
     Route::post('/{id}/delete', [CategoryController::class, 'deleteCategory']);
+});
+
+Route::group(['prefix' => 'item'], function () {
+    Route::get('/search', [ItemController::class, 'searchItems']);
+    Route::get('/searchISBN', [ItemController::class, 'getItemsByISBN']);
+    Route::post('/create', [ItemController::class, 'createItem']);
+    Route::post('/{id}', [ItemController::class, 'getItem']);
+    Route::post('/{id}/update', [ItemController::class, 'updateItem']);
+    Route::post('/{id}/delete', [ItemController::class, 'deleteItem']);
 });

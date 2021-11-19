@@ -139,11 +139,23 @@ class TagController extends Controller
      *                  "message": "duplicate tag name"
      *              }
      *          )
+     *      }),
+     *      @OA\Response(response=400, description="失敗(請求格式錯誤)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "error Input"
+     *              }
+     *          )
      *      })
      *  )
      */
     public function createTag() {
         $name = request()->input('name');
+        if ($name === null) {
+            return response()->json(['status' => 0, 'message' => 'error Input'], 400);
+        }
         if (Tag::checkDuplicateName($name)) {
             return response()->json(['status' => 0, 'message' => 'duplicate tag name'], 409);
         }
