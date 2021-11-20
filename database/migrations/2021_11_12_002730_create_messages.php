@@ -17,6 +17,7 @@ class CreateMessages extends Migration
             $table->id();
             $table->unsignedBigInteger('from_user');
             $table->unsignedBigInteger('to_user');
+            $table->text('message');
             $table->foreign('from_user')->references('id')->on('users');
             $table->foreign('to_user')->references('id')->on('users');
             $table->timestamps();
