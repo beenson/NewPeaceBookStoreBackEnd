@@ -424,6 +424,7 @@ class AuthController extends Controller
             if (hash('sha512',$oldPassword) !== $user->password) {
                 return response()->json(['status' => 0, 'message' => 'error oldPassword'], 400);
             }
+            $user->password = hash('sha512',$password);
         }
         if (request()->has('name')) {
             $user->name = request()->get('name');

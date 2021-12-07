@@ -145,7 +145,7 @@ class CategoryController extends Controller
         if ($name === null) {
             return response()->json(['status' => 0, 'message' => 'error Input'], 400);
         }
-        if (Category::checkDuplicateName) {
+        if (Category::checkDuplicateName($name)) {
             return response()->json(['status' => 0, 'message' => 'duplicate category name'], 409);
         }
         $category = new Category;
