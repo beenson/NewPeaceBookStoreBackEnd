@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\PhoneVerify;
 use App\Models\User;
 use App\Services\SMSService;
@@ -431,5 +432,35 @@ class AuthController extends Controller
         }
         $user->save();
         return response()->json(['status' => 1]);
+    }
+
+    /**
+     *  @OA\Post(
+     *      path="/api/auth/comments",
+     *      summary="取得個人評論紀錄",
+     *      tags={"Auth"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "data": {{
+     *                      "id": 2,
+     *                      "user_id": 2,
+     *                      "item_id": 2,
+     *                      "rate": 5
+     *                      "message": "comment message",
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  }}
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function getAuthComments() {
+        $user = auth()->user();
+        return response()->json(['status' => 1, 'data' => $user->getComments()]);
     }
 }

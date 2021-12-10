@@ -235,4 +235,69 @@ class OrderController extends Controller
         $done_orders = Order::getMerchantOrders($user->id, false);
         return response()->json(['status' => 1, 'todo' => $todo_orders, 'done' => $done_orders]);
     }
+
+    /**
+     *  @OA\Post(
+     *      path="/api/auth/marchant/manage/{oid}/payment/complete",
+     *      summary="商家手動標示訂單已付款",
+     *      tags={"Auth"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function completeMerchantOrderPayment() {
+        $user = auth()->user();
+        $oid = request()->route('oid');
+        $order = Order::find($oid);
+        if ($order === null) {
+            return response()->json(['status' => 0, 'message' => 'order not found'], 404);
+        }
+        if ($order->merchant_id !== $user->id) {
+            return response()->json(['status' => 0, 'message' => 'order not belongs this merchant'], 401);
+        }
+        $payment = $order->getOrderPayment();
+        if ($payment === null) {
+            return response()->json(['status' => 0, 'message' => 'orderPayment not found'], 404);
+        }
+        $payment->status = 1;
+        $payment->save();
+        return response()->json(['status' => 1]);
+    }
+
+    /**
+     *  @OA\Post(
+     *      path="/api/auth/marchant/manage/{oid}/complete",
+     *      summary="商家標示訂單已完成",
+     *      tags={"Auth"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function completeMerchantOrder() {
+        $user = auth()->user();
+        $oid = request()->route('oid');
+        $order = Order::find($oid);
+        if ($order === null) {
+            return response()->json(['status' => 0, 'message' => 'order not found'], 404);
+        }
+        if ($order->merchant_id !== $user->id) {
+            return response()->json(['status' => 0, 'message' => 'order not belongs this merchant'], 401);
+        }
+        $order->status = 2;
+        return response()->json(['status' => 1]);
+    }
 }

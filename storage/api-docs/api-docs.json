@@ -1531,6 +1531,150 @@
                 ]
             }
         },
+        "/api/auth/marchant/manage": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "商家取得訂單",
+                "operationId": "5d397dec4fffbc23978e84b9ff20981a",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "todo": [
+                                        {
+                                            "id": 1,
+                                            "user_id": 1,
+                                            "status": 1,
+                                            "total_price": 100,
+                                            "created_at": null,
+                                            "updated_at": null
+                                        }
+                                    ],
+                                    "done": [
+                                        {
+                                            "id": 1,
+                                            "user_id": 1,
+                                            "status": 1,
+                                            "total_price": 100,
+                                            "created_at": null,
+                                            "updated_at": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/marchant/manage/{oid}/payment/complete": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "商家手動標示訂單已付款",
+                "operationId": "66eea4671dc0f26e66c66fad007b3fce",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/marchant/manage/{oid}/complete": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "商家標示訂單已完成",
+                "operationId": "a98651481ca52cb522609bdd1e936adb",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/order/{id}/comment": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "商家標示訂單已完成",
+                "operationId": "239ea297b895225d18d8a3b8f2419247",
+                "parameters": [
+                    {
+                        "name": "rate",
+                        "in": "query",
+                        "description": "關鍵字",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "rate",
+                        "in": "query",
+                        "description": "關鍵字",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/tag/search": {
             "get": {
                 "tags": [
