@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -194,5 +195,44 @@ class OrderController extends Controller
             return response()->json(['status' => 0, 'message' => 'order not belongs this user'], 401);
         }
         return response()->json(['status' => 1, 'data' => $order]);
+    }
+
+    /**
+     *  @OA\Get(
+     *      path="/api/auth/marchant/manage",
+     *      summary="商家取得訂單",
+     *      tags={"Auth"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "todo": {{
+     *                      "id": 1,
+     *                      "user_id": 1,
+     *                      "status": 1,
+     *                      "total_price": 100,
+     *                      "created_at": null,
+     *                      "updated_at": null
+     *                  }},
+     *                  "done": {{
+     *                      "id": 1,
+     *                      "user_id": 1,
+     *                      "status": 1,
+     *                      "total_price": 100,
+     *                      "created_at": null,
+     *                      "updated_at": null
+     *                  }}
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function getAuthMerchantOrders() {
+        $user = auth()->user();
+        $todo_orders = Order::getMerchantOrders($user->id);
+        $done_orders = Order::getMerchantOrders($user->id, false);
+        return response()->json(['status' => 1, 'todo' => $todo_orders, 'done' => $done_orders]);
     }
 }

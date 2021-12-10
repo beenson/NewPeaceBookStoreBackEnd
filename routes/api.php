@@ -101,6 +101,7 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::get('/banRecords', [BanRecordController::class, 'getMyBanRecords']);
     Route::get('/items', [ItemController::class, 'getAuthItems']);
+    Route::get('/marchant/manage', [OrderController::class, 'getAuthMerchantOrders']);
 });
 
 Route::group(['prefix' => 'user'], function () {
@@ -144,3 +145,4 @@ Route::group(['prefix' => 'item'], function () {
     Route::post('/{id}/update', [ItemController::class, 'updateItem']);
     Route::post('/{id}/delete', [ItemController::class, 'deleteItem']);
 });
+
