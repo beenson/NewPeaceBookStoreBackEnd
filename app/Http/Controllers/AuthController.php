@@ -449,7 +449,7 @@ class AuthController extends Controller
      *                      "id": 2,
      *                      "user_id": 2,
      *                      "item_id": 2,
-     *                      "rate": 5
+     *                      "rate": 5,
      *                      "message": "comment message",
      *                      "created_at": "2021-11-12T15:15:10.000000Z",
      *                      "updated_at": "2021-11-12T15:15:10.000000Z"
