@@ -435,7 +435,7 @@ class AuthController extends Controller
     }
 
     /**
-     *  @OA\Post(
+     *  @OA\Get(
      *      path="/api/auth/comments",
      *      summary="取得個人評論紀錄",
      *      tags={"Auth"},

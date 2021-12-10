@@ -20,4 +20,8 @@ class Item extends Model
     public function getTags() {
         return $this->hasMany(ItemTag::class, 'item_id', 'id')->get();
     }
+
+    public function getComments() {
+        return $this->hasMany(Comment::class, 'item_id', 'id')->get();
+    }
 }

@@ -100,7 +100,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('/order/{id}', [OrderController::class, 'authOrder']);
 
     Route::get('/comments', [AuthController::class, 'getAuthComments']);
-    Route::get('/comment/item/{id}', [ItemController::class, 'postItemComment']);
+    Route::post('/comment/item/{id}', [ItemController::class, 'postItemComment']);
 
     Route::get('/marchant/manage', [OrderController::class, 'getAuthMerchantOrders']);
     Route::post('/marchant/manage/{oid}/complete', [OrderController::class, 'completeMerchantOrder']);
@@ -148,6 +148,7 @@ Route::group(['prefix' => 'item'], function () {
     Route::get('/searchISBN', [ItemController::class, 'getItemsByISBN']);
     Route::post('/create', [ItemController::class, 'createItem']);
     Route::post('/{id}', [ItemController::class, 'getItem']);
+    Route::get('/{id}/comments', [ItemController::class, 'getItemComments']);
     Route::post('/{id}/update', [ItemController::class, 'updateItem']);
     Route::post('/{id}/delete', [ItemController::class, 'deleteItem']);
 });

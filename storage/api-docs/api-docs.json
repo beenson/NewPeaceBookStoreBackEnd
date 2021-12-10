@@ -414,12 +414,12 @@
             }
         },
         "/api/auth/comments": {
-            "post": {
+            "get": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "取得個人評論紀錄",
-                "operationId": "88ce27cf219be4f936701c9ed35bd924",
+                "operationId": "6b3ae08df92b35a9a5dd6e56a20dc6f1",
                 "responses": {
                     "200": {
                         "description": "成功",
@@ -1416,6 +1416,43 @@
                                         "created_at": "2021-11-12T15:15:10.000000Z",
                                         "updated_at": "2021-11-12T15:15:10.000000Z"
                                     }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/item/{id}/comments": {
+            "post": {
+                "tags": [
+                    "Item"
+                ],
+                "summary": "取得商品評論紀錄",
+                "operationId": "f56e5f64fbcb46f2fd1ac0ab46f4a27e",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": [
+                                        {
+                                            "id": 2,
+                                            "user_id": 2,
+                                            "item_id": 2,
+                                            "rate": 5,
+                                            "message": "comment message",
+                                            "created_at": "2021-11-12T15:15:10.000000Z",
+                                            "updated_at": "2021-11-12T15:15:10.000000Z"
+                                        }
+                                    ]
                                 }
                             }
                         }

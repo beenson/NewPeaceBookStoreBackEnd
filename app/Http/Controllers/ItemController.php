@@ -526,4 +526,39 @@ class ItemController extends Controller
         $comment->save();
         return response()->json(['status' => 1, 'data' => $comment]);
     }
+
+
+    /**
+     *  @OA\Post(
+     *      path="/api/item/{id}/comments",
+     *      summary="取得商品評論紀錄",
+     *      tags={"Item"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "data": {{
+     *                      "id": 2,
+     *                      "user_id": 2,
+     *                      "item_id": 2,
+     *                      "rate": 5,
+     *                      "message": "comment message",
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  }}
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function getItemComments() {
+        $id = request()->route('id');
+        $item = Item::find($id);
+        if ($item === null) {
+            return response()->json(['status' => 0, 'message' => 'item not found'], 404);
+        }
+        return response()->json(['status' => 1, 'data' => $item->getComments()]);
+    }
 }
