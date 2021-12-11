@@ -4,6 +4,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY . .
 COPY .env.example .env
 RUN composer install
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 RUN php artisan key:generate
 RUN php artisan migrate
 EXPOSE 8000
