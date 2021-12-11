@@ -15,6 +15,8 @@ build:
 
 run:
 	docker run -d --name $(CONTAINER_NAME) -p 8000:8000 $(IMAGE):$(VERSION)
+
 clean:
-	docker container rm -f $(CONTAINER_NAME) || true
+	docker container stop $(CONTAINER_NAME) || true
+	docker container rm $(CONTAINER_NAME) || true
 	docker image rm -f $(IMAGE):$(VERSION) || true
