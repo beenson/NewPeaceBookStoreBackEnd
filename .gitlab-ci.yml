@@ -23,6 +23,8 @@ deploy-job:       # This job runs in the build stage, which runs first.
     - sudo make clean
     - sudo make
     - sudo make run
+  rules:
+    - if: $CI_DEPLOY_FREEZE == null
   tags:
     - laravel-deploy
 
