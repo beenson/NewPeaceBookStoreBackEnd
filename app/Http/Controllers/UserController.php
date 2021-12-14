@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
@@ -273,5 +275,39 @@ class UserController extends Controller
         }
         $user->save();
         return response()->json(['status' => 1, 'data' => $user]);
+    }
+
+    /**
+     *  @OA\Get(
+     *      path="/api/user/{id}/comments",
+     *      summary="取得商家評價紀錄",
+     *      tags={"Item"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "data": {{
+     *                      "id": 2,
+     *                      "user_id": 2,
+     *                      "merchant_id": 2,
+     *                      "rate": 5,
+     *                      "message": "comment message",
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  }}
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function userMerchantComments() {
+        $id = request()->route('id');
+        $user = User::find($id);
+        if ($user === null) {
+            return response()->json(['status' => 0, 'message' => 'user not found'], 404);
+        }
+        return response()->json(['status' => 1, 'data' => $user->getMerchantComments()]);
     }
 }

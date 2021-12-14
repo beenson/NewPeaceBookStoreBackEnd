@@ -30,8 +30,14 @@ class User extends Authenticatable implements JWTSubject {
         return $this->hasMany(Item::class, 'owner', 'id')->get();
     }
 
+    // 個人發出的評論
     public function getComments() {
         return $this->hasMany(Comment::class, 'user_id', 'id')->get();
+    }
+
+    // 商店的評論
+    public function getMerchantComments() {
+        return $this->hasMany(Comment::class, 'merchant_id', 'id')->get();
     }
 
     public function getOrders() {
@@ -50,6 +56,17 @@ class User extends Authenticatable implements JWTSubject {
 
     public function getPhoneVerify() {
         return $this->hasOne(PhoneVerify::class, 'user_id', 'id')->get()->first();
+    }
+
+    public function checkCommentAvailible($orderId) {
+        $order = Order::find($orderId);
+        if ($order === null) {
+            return false;
+        }
+        if ($order->user_id !== $this->id) {
+            return false;
+        }
+        return $order->getComment() === null;
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Order;
 use App\Models\PhoneVerify;
 use App\Models\User;
 use App\Services\SMSService;
@@ -462,5 +463,70 @@ class AuthController extends Controller
     public function getAuthComments() {
         $user = auth()->user();
         return response()->json(['status' => 1, 'data' => $user->getComments()]);
+    }
+
+    /**
+     *  @OA\Post(
+     *      path="/api/auth/order/{id}/comment",
+     *      summary="針對訂單進行評論",
+     *      tags={"Auth"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *          name="rate",
+     *          in="query",
+     *          description="評分",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="message",
+     *          in="query",
+     *          description="評論",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "data": {
+     *                      "id": 2,
+     *                      "user_id": 2,
+     *                      "merchant_id": 2,
+     *                      "rate": 5,
+     *                      "message": "comment message",
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  }
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function postComment() {
+        $user = auth()->user();
+        $id = request()->route('id');
+        $rate = request()->get('rate');
+        $message = request()->get('message');
+        if ($rate === null || $message === null) {
+            return response()->json(['status' => 0, 'message' => 'bad request'], 401);
+        }
+        $order = Order::find($id);
+        if (!$user->checkCommentAvailible($id)) {
+            return response()->json(['status' => 0, 'message' => 'comment has already exist or not found'], 401);
+        }
+        $comment = new Comment;
+        $comment->user_id = $user->id;
+        $comment->merchant_id = $order->merchant_id;
+        $comment->order_id = $id;
+        $comment->rate = $rate;
+        $comment->message = $message;
+        $comment->save();
+        return response()->json(['status' => 1, 'data' => $comment]);
     }
 }

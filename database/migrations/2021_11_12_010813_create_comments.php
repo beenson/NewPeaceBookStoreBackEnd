@@ -16,9 +16,11 @@ class CreateComments extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('item_id');
+            $table->unsignedBigInteger('merchant_id');
+            $table->unsignedBigInteger('order_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('merchant_id')->references('id')->on('users');
+            $table->foreign('order_id')->references('id')->on('orders');
             $table->integer('rate');
             $table->string('message');
             $table->timestamps();

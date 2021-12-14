@@ -98,9 +98,9 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::get('/orders', [OrderController::class, 'authOrders']);
     Route::get('/order/{id}', [OrderController::class, 'authOrder']);
+    Route::post('/order/{id}/comment', [AuthController::class, 'postComment']);
 
     Route::get('/comments', [AuthController::class, 'getAuthComments']);
-    Route::post('/comment/item/{id}', [ItemController::class, 'postItemComment']);
 
     Route::get('/marchant/manage', [OrderController::class, 'getAuthMerchantOrders']);
     Route::post('/marchant/manage/{oid}/complete', [OrderController::class, 'completeMerchantOrder']);
@@ -108,9 +108,10 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::get('/banRecords', [BanRecordController::class, 'getMyBanRecords']);
     Route::get('/items', [ItemController::class, 'getAuthItems']);
+    Route::post('/createOrder', [OrderController::class, 'createOrder']);
 });
 
-Route::group(['prefix' => 'user'], function () {
+Route::group(['prefix' => 'admin/user'], function () {
     Route::get('/', [UserController::class, 'users']);
     Route::post('/', [UserController::class, 'createUser']);
     Route::get('/{id}', [UserController::class, 'user']);
@@ -121,6 +122,13 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/{id}/banRecords', [BanRecordController::class, 'getBanRecordsByUser']);
     Route::post('/{id}/ban', [BanRecordController::class, 'banUser']);
     Route::get('/{id}/items', [ItemController::class, 'getUserItems']);
+});
+
+Route::group(['prefix' => 'user'], function () {
+    Route::get('/{id}', [UserController::class, 'user']);
+    Route::get('/{id}/items', [ItemController::class, 'getUserItems']);
+    // Route::get('/{id}/comments', [UserController::class, 'userComments']);
+    Route::get('/{id}/merchant_comments', [UserController::class, 'userMerchantComments']);
 });
 
 Route::group(['prefix' => 'ban_record'], function () {
@@ -148,8 +156,6 @@ Route::group(['prefix' => 'item'], function () {
     Route::get('/searchISBN', [ItemController::class, 'getItemsByISBN']);
     Route::post('/create', [ItemController::class, 'createItem']);
     Route::post('/{id}', [ItemController::class, 'getItem']);
-    Route::get('/{id}/comments', [ItemController::class, 'getItemComments']);
     Route::post('/{id}/update', [ItemController::class, 'updateItem']);
     Route::post('/{id}/delete', [ItemController::class, 'deleteItem']);
 });
-

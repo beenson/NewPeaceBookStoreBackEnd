@@ -21,6 +21,10 @@ class Order extends Model
         return $this->hasOne(OrderPayment::class, 'order_id', 'id')->get()->first();
     }
 
+    public function getComment() {
+        return $this->hasOne(Comment::class, 'order_id', 'id')->get()->first();
+    }
+
     public static function getMerchantOrders($uid, $onProcess = true) {
         $query = Order::where('merchant_id', $uid);
         if ($onProcess) {

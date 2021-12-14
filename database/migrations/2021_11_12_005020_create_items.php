@@ -20,6 +20,7 @@ class CreateItems extends Migration
             $table->foreign('owner')->references('id')->on('users');
             $table->foreign('category')->references('id')->on('categories');
             $table->string('name');
+            $table->string('description');
             $table->string('ISBN');
             $table->integer('price');
             $table->integer('quantity');

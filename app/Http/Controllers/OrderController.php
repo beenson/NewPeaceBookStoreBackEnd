@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -299,5 +300,51 @@ class OrderController extends Controller
         }
         $order->status = 2;
         return response()->json(['status' => 1]);
+    }
+
+    /**
+     * items = [ // string (json array)
+     *      id: 1,
+     *      amount: 10
+     * ]
+     */
+    public function createOrder() {
+        $user = auth()->user();
+        $merchatId = request()->get('merchant_id');
+        $orderItems = [];
+        $totalPrice = 0;
+        $items = json_decode(request()->get('items'));
+        foreach($items as $value) {
+            $id = $value->id;
+            $quantity = $value->quantity;
+            $item = Item::find($id);
+            if ($item === null) {
+                return response()->json(['status' => 0, 'message' => 'item not found'], 404);
+            }
+            if ($quantity > $item->quantity) {
+                return response()->json(['status' => 0, 'message' => 'item not enough'], 401);
+            }
+            $totalPrice += $item->price * $quantity;
+        }
+        $order = new Order;
+        $order->merchat_id = $merchatId;
+        $order->user_id = $user->id;
+        $order->totalPrice = $totalPrice;
+        $order->save();
+        foreach($items as $value) {
+            $id = $value->id;
+            $quantity = $value->quantity;
+            $item = Item::find($id);
+            $item->quantity -= $quantity;
+            $item->save();
+            $orderItem = new OrderItem;
+            $orderItem->item_id = $item->id;
+            $orderItem->order_id = $order->id;
+            $orderItem->quantity = $quantity;
+            $orderItem->price = $item->price * $quantity;
+            $orderItem->save();
+            array_push($orderItems, $orderItem);
+        }
+        return response()->json(['status' => 1, 'data' => ['order' => $order, 'orderItems'=> $orderItems]]);
     }
 }

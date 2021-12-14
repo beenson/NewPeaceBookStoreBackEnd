@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Item;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -456,109 +457,5 @@ class ItemController extends Controller
                     ->orWhere('ISBN', 'LIKE', "%$keyword%")
                     ->orderBy('id', 'desc')->get();
         return response()->json(['status' => 1, 'data' => $items]);
-    }
-
-
-    /**
-     *  @OA\Post(
-     *      path="/api/auth/comment/item/{id}",
-     *      summary="針對商品進行評論",
-     *      tags={"Auth"},
-     *      security={{"bearerAuth":{}}},
-     *      @OA\Parameter(
-     *          name="rate",
-     *          in="query",
-     *          description="評分",
-     *          required=true,
-     *          @OA\Schema(
-     *              type="integer"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="message",
-     *          in="query",
-     *          description="評論",
-     *          required=true,
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
-     *      @OA\Response(response=200, description="成功",content={
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              example={
-     *                  "status": 1,
-     *                  "data": {
-     *                      "id": 2,
-     *                      "user_id": 2,
-     *                      "item_id": 2,
-     *                      "rate": 5,
-     *                      "message": "comment message",
-     *                      "created_at": "2021-11-12T15:15:10.000000Z",
-     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
-     *                  }
-     *              }
-     *          )
-     *      })
-     *  )
-     */
-    public function postItemComment() {
-        $user = auth()->user();
-        $id = request()->route('id');
-        $rate = request()->get('rate');
-        $message = request()->get('message');
-        if ($rate === null || $message === null) {
-            return response()->json(['status' => 0, 'message' => 'bad request'], 401);
-        }
-        $item = Item::find($id);
-        if ($item === null) {
-            return response()->json(['status' => 0, 'message' => 'item not found'], 404);
-        }
-        $comment = Comment::where('user_id', $user->id, 'item_id', $id)->get()->first();
-        if ($comment !== null) {
-            return response()->json(['status' => 0, 'message' => 'comment has already exist'], 401);
-        }
-        $comment = new Comment;
-        $comment->user_id = $user->id;
-        $comment->item_id = $id;
-        $comment->rate = $rate;
-        $comment->message = $message;
-        $comment->save();
-        return response()->json(['status' => 1, 'data' => $comment]);
-    }
-
-
-    /**
-     *  @OA\Post(
-     *      path="/api/item/{id}/comments",
-     *      summary="取得商品評論紀錄",
-     *      tags={"Item"},
-     *      security={{"bearerAuth":{}}},
-     *      @OA\Response(response=200, description="成功",content={
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              example={
-     *                  "status": 1,
-     *                  "data": {{
-     *                      "id": 2,
-     *                      "user_id": 2,
-     *                      "item_id": 2,
-     *                      "rate": 5,
-     *                      "message": "comment message",
-     *                      "created_at": "2021-11-12T15:15:10.000000Z",
-     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
-     *                  }}
-     *              }
-     *          )
-     *      })
-     *  )
-     */
-    public function getItemComments() {
-        $id = request()->route('id');
-        $item = Item::find($id);
-        if ($item === null) {
-            return response()->json(['status' => 0, 'message' => 'item not found'], 404);
-        }
-        return response()->json(['status' => 1, 'data' => $item->getComments()]);
     }
 }

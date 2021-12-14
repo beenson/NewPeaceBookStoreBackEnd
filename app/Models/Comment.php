@@ -12,4 +12,12 @@ class Comment extends Model
     public function getUser() {
         return $this->belongsTo(User::class, 'user_id', 'id')->first();
     }
+
+    public function getMerchant() {
+        return $this->belongsTo(User::class, 'merchant_id', 'id')->first();
+    }
+
+    public function getOrder() {
+        return $this->belongsTo(Order::class, 'order_id', 'id')->first();
+    }
 }
