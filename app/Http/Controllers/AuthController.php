@@ -559,4 +559,51 @@ class AuthController extends Controller
         $comment->save();
         return response()->json(['status' => 1, 'data' => $comment]);
     }
+
+    /**
+     *  @OA\Get(
+     *      path="/api/auth/recommendedItems",
+     *      summary="取得就讀科系的商品(推薦商品)",
+     *      tags={"Auth"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "data":{{
+     *                      "id": 1,
+     *                      "owner": 1,
+     *                      "category": 2,
+     *                      "name": "Book Name",
+     *                      "ISBN": "3333-1111-2222-1234",
+     *                      "price": 100,
+     *                      "quantity": 1,
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  },
+     *                  {
+     *                      "id": 2,
+     *                      "owner": 2,
+     *                      "category": 2,
+     *                      "name": "Book Name2",
+     *                      "ISBN": "7777-1666-5552-4321",
+     *                      "price": 800,
+     *                      "quantity": 2,
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  }}
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function getItemsByMajor() {
+        $user = auth()->user();
+        $major = $user->getMajor();
+        if ($major === null) {
+            return response()->json(['status' => 1, 'data' => []]);
+        }
+        return response()->json(['status' => 1, 'data' => $major->getItems()]);
+    }
 }

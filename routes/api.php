@@ -95,6 +95,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('/bindPhone', [AuthController::class, 'bindPhone']);
     Route::post('/verifyPhone', [AuthController::class, 'verifyPhone']);
     Route::post('/editProfile', [AuthController::class, 'editProfile']);
+    Route::post('/recommendedItems', [AuthController::class, 'getItemsByMajor']);
 
     Route::get('/orders', [OrderController::class, 'authOrders']);
     Route::get('/order/{id}', [OrderController::class, 'authOrder']);
