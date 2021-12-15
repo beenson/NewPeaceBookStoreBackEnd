@@ -26,12 +26,14 @@ class CategoryController extends Controller
      *                  "data":{{
      *                      "id": 1,
      *                      "name": "category-1",
+     *                      "is_department": true,
      *                      "created_at": "2021-11-12T15:15:10.000000Z",
      *                      "updated_at": "2021-11-12T15:15:10.000000Z"
      *                  },
      *                  {
      *                      "id": 2,
      *                      "name": "category-2",
+     *                      "is_department": false,
      *                      "created_at": "2021-11-12T15:15:10.000000Z",
      *                      "updated_at": "2021-11-12T15:15:10.000000Z"
      *                  }}
@@ -106,6 +108,15 @@ class CategoryController extends Controller
      *              type="string"
      *          )
      *      ),
+     *      @OA\Parameter(
+     *          name="is_department",
+     *          in="query",
+     *          description="是否為科系分類",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="boolean"
+     *          )
+     *      ),
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -114,6 +125,7 @@ class CategoryController extends Controller
      *                  "data":{
      *                      "id": 1,
      *                      "name": "tag-1",
+     *                      "is_department": true,
      *                      "created_at": "2021-11-12T15:15:10.000000Z",
      *                      "updated_at": "2021-11-12T15:15:10.000000Z"
      *                  }
@@ -142,7 +154,8 @@ class CategoryController extends Controller
      */
     public function createCategory() {
         $name = request()->get('name');
-        if ($name === null) {
+        $is_department = request()->get('is_department');
+        if ($name === null || $is_department === null) {
             return response()->json(['status' => 0, 'message' => 'error Input'], 400);
         }
         if (Category::checkDuplicateName($name)) {
@@ -150,6 +163,7 @@ class CategoryController extends Controller
         }
         $category = new Category;
         $category->name = $name;
+        $category->is_department = $is_department;
         $category->save();
         return response()->json(['status' => 1, 'data' => $category]);
     }
