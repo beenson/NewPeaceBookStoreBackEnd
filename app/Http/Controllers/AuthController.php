@@ -183,6 +183,7 @@ class AuthController extends Controller
         $user->name = $name;
         $user->password = hash('sha512', $password);
         $user->sid = $sid;
+        $user->major = $major;
         $user->save();
         $jwt = JWTAuth::fromUser($user);
         return response()->json(['status' => 1, 'token' => $jwt]);
