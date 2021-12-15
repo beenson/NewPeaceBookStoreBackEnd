@@ -27,25 +27,25 @@ class User extends Authenticatable implements JWTSubject {
     }
 
     public function getItems() {
-        return $this->hasMany(Item::class, 'owner', 'id')->get();
+        return $this->hasMany(Item::class, 'owner', 'id')->orderBy('updated_at', 'desc')->get();
     }
 
     // 個人發出的評論
     public function getComments() {
-        return $this->hasMany(Comment::class, 'user_id', 'id')->get();
+        return $this->hasMany(Comment::class, 'user_id', 'id')->orderBy('updated_at', 'desc')->get();
     }
 
     // 商店的評論
     public function getMerchantComments() {
-        return $this->hasMany(Comment::class, 'merchant_id', 'id')->get();
+        return $this->hasMany(Comment::class, 'merchant_id', 'id')->orderBy('updated_at', 'desc')->get();
     }
 
     public function getOrders() {
-        return $this->hasMany(Order::class, 'user_id', 'id')->get();
+        return $this->hasMany(Order::class, 'user_id', 'id')->orderBy('updated_at', 'desc')->get();
     }
 
     public function getBanRecords() {
-        return $this->hasMany(BanRecord::class, 'user_id', 'id')->get();
+        return $this->hasMany(BanRecord::class, 'user_id', 'id')->orderBy('updated_at', 'desc')->get();
     }
 
     public function getMessages(User $targetUser) {

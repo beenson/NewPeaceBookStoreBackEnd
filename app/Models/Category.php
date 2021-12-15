@@ -10,7 +10,7 @@ class Category extends Model
     protected $table = 'categories';
 
     public function getItems() {
-        return $this->hasMany(Item::class, 'category', 'id')->get();
+        return $this->hasMany(Item::class, 'category', 'id')->orderBy('updated_at', 'desc')->get();
     }
 
     public static function checkDuplicateName($name) {
