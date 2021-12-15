@@ -9,6 +9,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+/*header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, X-Requested-With, authorization");*/
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -84,9 +87,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  *     name="Item",
  * )
  */
-/*header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, X-Requested-With, authorization");*/
 Route::group(['prefix' => 'auth'], function () {
     Route::get('/', [AuthController::class, 'me']);
     Route::post('/register', [AuthController::class, 'register']);
