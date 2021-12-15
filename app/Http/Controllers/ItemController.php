@@ -10,7 +10,38 @@ use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
-    // 取得資訊(顧客)
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except([]);
+    }
+
+    /**
+     *  @OA\Get(
+     *      path="/api/item/{id}",
+     *      summary="取得商品資訊(顧客)",
+     *      tags={"Item"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "data":{
+     *                      "id": 2,
+     *                      "owner": 2,
+     *                      "category": 2,
+     *                      "name": "Book Name2",
+     *                      "ISBN": "3333-1111-2222-1234",
+     *                      "price": 800,
+     *                      "quantity": 2,
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  }
+     *              }
+     *          )
+     *      })
+     *  )
+     */
     public function getItem() {
         $id = request()->route('id');
         $item = Item::find($id);
@@ -23,7 +54,6 @@ class ItemController extends Controller
         }
         return response()->json(['status' => 1, 'data' => $item]);
     }
-
     /**
      *  @OA\Get(
      *      path="/api/auth/items",
@@ -66,7 +96,6 @@ class ItemController extends Controller
         $user = auth()->user();
         return response()->json(['status' => 1, 'data' => $user->getItems()]);
     }
-
     /**
      *  @OA\Get(
      *      path="/api/user/{id}/items",
@@ -115,7 +144,6 @@ class ItemController extends Controller
         // TODO: 移除已賣出的資料
         return response()->json(['status' => 1, 'data' => $user->getItems()]);
     }
-
     /**
      *  @OA\Post(
      *      path="/api/item/create",
@@ -212,7 +240,6 @@ class ItemController extends Controller
         $item->save();
         return response()->json(['status' => 1, 'data' => $item]);
     }
-
     /**
      *  @OA\Post(
      *      path="/api/item/{id}/update",
@@ -312,7 +339,6 @@ class ItemController extends Controller
         $item->save();
         return response()->json(['status' => 1, 'data' => $item]);
     }
-
     /**
      *  @OA\Post(
      *      path="/api/item/{id}/delete",
@@ -403,7 +429,6 @@ class ItemController extends Controller
         $items = Item::where('ISBN', $ISBN)->where('quantity', '>', 0)->orderBy('id', 'desc')->get();
         return response()->json(['status' => 1, 'data' => $items]);
     }
-
     /**
      *  @OA\Get(
      *      path="/api/item/search",

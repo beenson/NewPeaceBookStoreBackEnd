@@ -15,7 +15,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api')->except([]);
-        $this->middleware('admin')->except([]);
+        $this->middleware('admin')->only(['createUser', 'updateUser']);
     }
 
 

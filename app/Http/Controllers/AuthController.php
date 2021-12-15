@@ -83,7 +83,6 @@ class AuthController extends Controller
         $jwt = JWTAuth::fromUser($user);
         return response()->json(['status' => 1, 'token' => $jwt]);
     }
-
     /**
      *  @OA\Post(
      *      path="/api/auth/register",
@@ -188,7 +187,6 @@ class AuthController extends Controller
         $jwt = JWTAuth::fromUser($user);
         return response()->json(['status' => 1, 'token' => $jwt]);
     }
-
     /**
      *  @OA\Get(
      *      path="/api/auth/",
@@ -226,7 +224,6 @@ class AuthController extends Controller
     {
         return response()->json(auth()->user());
     }
-
     /**
      *  @OA\Get(
      *      path="/api/auth/logout",
@@ -248,7 +245,6 @@ class AuthController extends Controller
         JWTAuth::parseToken()->invalidate();
         return response()->json(['status' => 1]);
     }
-
     /**
      *  @OA\Post(
      *      path="/api/auth/bindPhone",
@@ -313,7 +309,6 @@ class AuthController extends Controller
         SMSService::sendMessage($phone, '驗證碼: '. $phone);
         return response()->json(['status' => 1]);
     }
-
     /**
      *  @OA\Post(
      *      path="/api/auth/verifyPhone",
@@ -383,7 +378,6 @@ class AuthController extends Controller
         $verify->save();
         return response()->json(['status' => 1]);
     }
-
     /**
      *  @OA\Post(
      *      path="/api/auth/editProfile",
@@ -464,7 +458,6 @@ class AuthController extends Controller
         $user->save();
         return response()->json(['status' => 1]);
     }
-
     /**
      *  @OA\Get(
      *      path="/api/auth/comments",
@@ -494,7 +487,6 @@ class AuthController extends Controller
         $user = auth()->user();
         return response()->json(['status' => 1, 'data' => $user->getComments()]);
     }
-
     /**
      *  @OA\Post(
      *      path="/api/auth/order/{id}/comment",
@@ -559,7 +551,6 @@ class AuthController extends Controller
         $comment->save();
         return response()->json(['status' => 1, 'data' => $comment]);
     }
-
     /**
      *  @OA\Get(
      *      path="/api/auth/recommendedItems",

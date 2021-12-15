@@ -9,8 +9,8 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->only(['deleteTag']);
-        $this->middleware('admin')->only(['deleteTag']);
+        $this->middleware('auth:api')->except([]);
+        $this->middleware('admin')->only(['createCategory', 'deleteCategory']);
     }
 
     /**

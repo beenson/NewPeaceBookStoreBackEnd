@@ -142,7 +142,6 @@ class OrderController extends Controller
         }
         return response()->json(['status' => 1, 'data' => $user->getOrders()]);
     }
-
     /**
      *  @OA\Get(
      *      path="/api/user/{id}/order/{oid}",
@@ -197,7 +196,6 @@ class OrderController extends Controller
         }
         return response()->json(['status' => 1, 'data' => $order]);
     }
-
     /**
      *  @OA\Get(
      *      path="/api/auth/marchant/manage",
@@ -236,11 +234,10 @@ class OrderController extends Controller
         $done_orders = Order::getMerchantOrders($user->id, false);
         return response()->json(['status' => 1, 'todo' => $todo_orders, 'done' => $done_orders]);
     }
-
     /**
      *  @OA\Post(
      *      path="/api/auth/marchant/manage/{oid}/payment/complete",
-     *      summary="商家手動標示訂單已付款",
+     *      summary="商家手動標示訂單已付款(賣家或管理員可操作)",
      *      tags={"Auth"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
@@ -260,7 +257,7 @@ class OrderController extends Controller
         if ($order === null) {
             return response()->json(['status' => 0, 'message' => 'order not found'], 404);
         }
-        if ($order->merchant_id !== $user->id) {
+        if ($order->merchant_id !== $user->id && $user->role != User::$ADMIN) {
             return response()->json(['status' => 0, 'message' => 'order not belongs this merchant'], 401);
         }
         $payment = $order->getOrderPayment();
@@ -271,11 +268,10 @@ class OrderController extends Controller
         $payment->save();
         return response()->json(['status' => 1]);
     }
-
     /**
      *  @OA\Post(
      *      path="/api/auth/marchant/manage/{oid}/complete",
-     *      summary="商家標示訂單已完成",
+     *      summary="商家標示訂單已完成(賣家或管理員可操作)",
      *      tags={"Auth"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
@@ -295,13 +291,12 @@ class OrderController extends Controller
         if ($order === null) {
             return response()->json(['status' => 0, 'message' => 'order not found'], 404);
         }
-        if ($order->merchant_id !== $user->id) {
+        if ($order->merchant_id !== $user->id && $user->role != User::$ADMIN) {
             return response()->json(['status' => 0, 'message' => 'order not belongs this merchant'], 401);
         }
         $order->status = 2;
         return response()->json(['status' => 1]);
     }
-
     /**
      * items = [ // string (json array)
      *      id: 1,

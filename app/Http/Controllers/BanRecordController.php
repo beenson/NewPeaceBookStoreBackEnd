@@ -10,7 +10,7 @@ class BanRecordController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth:api')->except([]);
+        $this->middleware('auth:api')->except([]);
         $this->middleware('admin')->except(['getMyBanRecords']);
     }
 
@@ -50,7 +50,6 @@ class BanRecordController extends Controller
         $user = auth()->user();
         return response()->json(['status' => 1, 'data' => $user->getBanRecords() ], 200);
     }
-
     /**
      *  @OA\Get(
      *      path="/api/ban_record",
@@ -87,7 +86,6 @@ class BanRecordController extends Controller
         $data = BanRecord::where('create_at', '>=', time() - 30 * 24 * 60 * 60)->orderBy('id', 'DESC')->get();
         return response()->json(['status' => 1, 'data' => $data ], 200);
     }
-
     /**
      *  @OA\Get(
      *      path="/api/user/{id}/banRecords",
@@ -137,7 +135,6 @@ class BanRecordController extends Controller
         }
         return response()->json(['status' => 1, 'data' => $user->getBanRecords() ], 200);
     }
-
     /**
      *  @OA\Post(
      *      path="/api/user/{id}/ban",
@@ -209,7 +206,6 @@ class BanRecordController extends Controller
         $record->save();
         return response()->json(['status' => 1], 200);
     }
-
     /**
      *  @OA\Post(
      *      path="/api/ban_record/{id}/update",
@@ -279,7 +275,6 @@ class BanRecordController extends Controller
         $record->save();
         return response()->json(['status' => 1], 200);
     }
-
     /**
      *  @OA\Post(
      *      path="/api/ban_record/{id}/delete",
