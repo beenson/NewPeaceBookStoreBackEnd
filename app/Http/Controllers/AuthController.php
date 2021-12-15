@@ -45,7 +45,18 @@ class AuthController extends Controller
      *              mediaType="application/json",
      *              example={
      *                  "status": 0,
-     *                  "token": "aabbcc"
+     *                  "token": "aabbcc",
+     *                  "user": {
+     *                      "id": 3,
+     *                      "name": "3",
+     *                      "email": "3",
+     *                      "role": 0,
+     *                      "sid": "3",
+     *                      "major": 1,
+     *                      "remember_token": null,
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  }
      *              }
      *          )
      *      }),
@@ -63,7 +74,7 @@ class AuthController extends Controller
      *              mediaType="application/json",
      *              example={
      *                  "status": 0,
-     *                  "message": "bad request"
+     *                  "message": "bad request",
      *              }
      *          )
      *      })
@@ -81,7 +92,7 @@ class AuthController extends Controller
             return response()->json(['status' => 0, 'message' => 'invalid credentials'], 401);
         }
         $jwt = JWTAuth::fromUser($user);
-        return response()->json(['status' => 1, 'token' => $jwt]);
+        return response()->json(['status' => 1, 'token' => $jwt, 'user' => $user]);
     }
     /**
      *  @OA\Post(
@@ -138,7 +149,18 @@ class AuthController extends Controller
      *              mediaType="application/json",
      *              example={
      *                  "status": 1,
-     *                  "token": "aabbcc"
+     *                  "token": "aabbcc",
+     *                  "user": {
+     *                      "id": 3,
+     *                      "name": "3",
+     *                      "email": "3",
+     *                      "role": 0,
+     *                      "sid": "3",
+     *                      "major": 1,
+     *                      "remember_token": null,
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  }
      *              }
      *          )
      *      }),
@@ -186,7 +208,7 @@ class AuthController extends Controller
         $user->major = $major;
         $user->save();
         $jwt = JWTAuth::fromUser($user);
-        return response()->json(['status' => 1, 'token' => $jwt]);
+        return response()->json(['status' => 1, 'token' => $jwt, 'user' => $user]);
     }
     /**
      *  @OA\Get(
