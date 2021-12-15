@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Order;
 use App\Models\PhoneVerify;
@@ -124,6 +125,15 @@ class AuthController extends Controller
      *              type="string"
      *          )
      *      ),
+     *      @OA\Parameter(
+     *          name="major",
+     *          in="query",
+     *          description="系別",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
      *      @OA\Response(response=200, description="註冊成功",content={
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -155,15 +165,19 @@ class AuthController extends Controller
      */
     public function register()
     {
-        if (!request()->has('email') || !request()->has('password') || !request()->has('name') || !request()->has('sid')) {
+        if (!request()->has('major') || !request()->has('email') || !request()->has('password') || !request()->has('name') || !request()->has('sid')) {
             return response()->json(['status' => 0, 'message' => 'bad request'], 400);
         }
         $email = request()->get('email');
         $password = request()->get('password');
         $name = request()->get('name');
         $sid = request()->get('sid');
+        $major = request()->get('major');
         if (!User::checkAvailible($email, $sid)) {
             return response()->json(['status' => 0, 'message' => 'duplicate user'], 409);
+        }
+        if (Category::find($major) === null) {
+            return response()->json(['status' => 0, 'message' => 'unknown major'], 404);
         }
         $user = new User();
         $user->email = $email;
@@ -190,6 +204,7 @@ class AuthController extends Controller
      *                  "email": "3",
      *                  "role": 0,
      *                  "sid": "3",
+     *                  "major": 1,
      *                  "remember_token": null,
      *                  "created_at": "2021-11-12T15:15:10.000000Z",
      *                  "updated_at": "2021-11-12T15:15:10.000000Z"
@@ -399,6 +414,14 @@ class AuthController extends Controller
      *              type="string"
      *          )
      *      ),
+     *      @OA\Parameter(
+     *          name="major",
+     *          in="query",
+     *          description="新系別",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -430,6 +453,13 @@ class AuthController extends Controller
         }
         if (request()->has('name')) {
             $user->name = request()->get('name');
+        }
+        if (request()->has('major')) {
+            $major = request()->get('major');
+            if (Category::find($major) === null) {
+                return response()->json(['status' => 0, 'message' => 'unknown major'], 400);
+            }
+            $user->name = $major;
         }
         $user->save();
         return response()->json(['status' => 1]);

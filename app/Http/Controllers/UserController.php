@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Order;
 use App\Models\User;
@@ -35,6 +36,7 @@ class UserController extends Controller
      *                      "email": "1",
      *                      "role": 0,
      *                      "sid": "3",
+     *                      "major": 1,
      *                      "remember_token": null,
      *                      "created_at": "2021-11-12T15:15:10.000000Z",
      *                      "updated_at": "2021-11-12T15:15:10.000000Z"
@@ -45,6 +47,7 @@ class UserController extends Controller
      *                      "email": "3",
      *                      "role": 0,
      *                      "sid": "3",
+     *                      "major": 1,
      *                      "remember_token": null,
      *                      "created_at": "2021-11-12T15:15:10.000000Z",
      *                      "updated_at": "2021-11-12T15:15:10.000000Z"
@@ -75,6 +78,7 @@ class UserController extends Controller
      *                      "email": "1",
      *                      "role": 0,
      *                      "sid": "3",
+     *                      "major": 1,
      *                      "remember_token": null,
      *                      "created_at": "2021-11-12T15:15:10.000000Z",
      *                      "updated_at": "2021-11-12T15:15:10.000000Z"
@@ -143,6 +147,15 @@ class UserController extends Controller
      *              type="string"
      *          )
      *      ),
+     *      @OA\Parameter(
+     *          name="major",
+     *          in="query",
+     *          description="科系",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
      *      @OA\Response(response=200, description="新增成功",content={
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -154,6 +167,7 @@ class UserController extends Controller
      *                      "email": "1",
      *                      "role": 0,
      *                      "sid": "3",
+     *                      "major": 3,
      *                      "remember_token": null,
      *                      "created_at": "2021-11-12T15:15:10.000000Z",
      *                      "updated_at": "2021-11-12T15:15:10.000000Z"
@@ -189,14 +203,19 @@ class UserController extends Controller
         $password = request()->get('password');
         $name = request()->get('name');
         $sid = request()->get('sid');
+        $major = request()->get('major');
         if (!User::checkAvailible($email, $sid)) {
             return response()->json(['status' => 0, 'message' => 'duplicate user'], 409);
+        }
+        if (Category::find($major) === null) {
+            return response()->json(['status' => 0, 'message' => 'unknown major'], 409);
         }
         $user = new User();
         $user->email = $email;
         $user->name = $name;
         $user->password = hash('sha512', $password);
         $user->sid = $sid;
+        $user->major = $major;
         $user->save();
         return response()->json(['status' => 1, 'data' => $user]);
     }
@@ -227,6 +246,15 @@ class UserController extends Controller
      *          description="權限",
      *          @OA\Schema(
      *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="major",
+     *          in="query",
+     *          description="科系",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
      *          )
      *      ),
      *      @OA\Response(response=200, description="修改成功",content={
@@ -272,6 +300,13 @@ class UserController extends Controller
         }
         if (request()->has('role')) {
             $user->role = request()->get('role');
+        }
+        if (request()->has('major')) {
+            $major = request()->get('major');
+            if (Category::find($major) === null) {
+                return response()->json(['status' => 0, 'message' => 'major not found'], 404);
+            }
+            $user->major = $major;
         }
         $user->save();
         return response()->json(['status' => 1, 'data' => $user]);

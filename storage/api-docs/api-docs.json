@@ -112,6 +112,15 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "major",
+                        "in": "query",
+                        "description": "系別",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "responses": {
@@ -169,6 +178,7 @@
                                     "email": "3",
                                     "role": 0,
                                     "sid": "3",
+                                    "major": 1,
                                     "remember_token": null,
                                     "created_at": "2021-11-12T15:15:10.000000Z",
                                     "updated_at": "2021-11-12T15:15:10.000000Z"
@@ -381,6 +391,14 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "major",
+                        "in": "query",
+                        "description": "新系別",
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "responses": {
@@ -438,6 +456,61 @@
                                             "updated_at": "2021-11-12T15:15:10.000000Z"
                                         }
                                     ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/order/{id}/comment": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "針對訂單進行評論",
+                "operationId": "a9c255e681155ccb38e2f5dde3885a8e",
+                "parameters": [
+                    {
+                        "name": "rate",
+                        "in": "query",
+                        "description": "評分",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "message",
+                        "in": "query",
+                        "description": "評論",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": {
+                                        "id": 2,
+                                        "user_id": 2,
+                                        "merchant_id": 2,
+                                        "rate": 5,
+                                        "message": "comment message",
+                                        "created_at": "2021-11-12T15:15:10.000000Z",
+                                        "updated_at": "2021-11-12T15:15:10.000000Z"
+                                    }
                                 }
                             }
                         }
@@ -1373,98 +1446,6 @@
                 ]
             }
         },
-        "/api/auth/comment/item/{id}": {
-            "post": {
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "針對商品進行評論",
-                "operationId": "862794ae9e889b07e08cce4494f45bd5",
-                "parameters": [
-                    {
-                        "name": "rate",
-                        "in": "query",
-                        "description": "評分",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "message",
-                        "in": "query",
-                        "description": "評論",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "成功",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "status": 1,
-                                    "data": {
-                                        "id": 2,
-                                        "user_id": 2,
-                                        "item_id": 2,
-                                        "rate": 5,
-                                        "message": "comment message",
-                                        "created_at": "2021-11-12T15:15:10.000000Z",
-                                        "updated_at": "2021-11-12T15:15:10.000000Z"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/item/{id}/comments": {
-            "post": {
-                "tags": [
-                    "Item"
-                ],
-                "summary": "取得商品評論紀錄",
-                "operationId": "f56e5f64fbcb46f2fd1ac0ab46f4a27e",
-                "responses": {
-                    "200": {
-                        "description": "成功",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "status": 1,
-                                    "data": [
-                                        {
-                                            "id": 2,
-                                            "user_id": 2,
-                                            "item_id": 2,
-                                            "rate": 5,
-                                            "message": "comment message",
-                                            "created_at": "2021-11-12T15:15:10.000000Z",
-                                            "updated_at": "2021-11-12T15:15:10.000000Z"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
         "/api/auth/orders": {
             "get": {
                 "tags": [
@@ -1977,6 +1958,7 @@
                                             "email": "1",
                                             "role": 0,
                                             "sid": "3",
+                                            "major": 1,
                                             "remember_token": null,
                                             "created_at": "2021-11-12T15:15:10.000000Z",
                                             "updated_at": "2021-11-12T15:15:10.000000Z"
@@ -1987,6 +1969,7 @@
                                             "email": "3",
                                             "role": 0,
                                             "sid": "3",
+                                            "major": 1,
                                             "remember_token": null,
                                             "created_at": "2021-11-12T15:15:10.000000Z",
                                             "updated_at": "2021-11-12T15:15:10.000000Z"
@@ -2045,6 +2028,15 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "major",
+                        "in": "query",
+                        "description": "科系",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "responses": {
@@ -2060,6 +2052,7 @@
                                         "email": "1",
                                         "role": 0,
                                         "sid": "3",
+                                        "major": 3,
                                         "remember_token": null,
                                         "created_at": "2021-11-12T15:15:10.000000Z",
                                         "updated_at": "2021-11-12T15:15:10.000000Z"
@@ -2113,6 +2106,7 @@
                                         "email": "1",
                                         "role": 0,
                                         "sid": "3",
+                                        "major": 1,
                                         "remember_token": null,
                                         "created_at": "2021-11-12T15:15:10.000000Z",
                                         "updated_at": "2021-11-12T15:15:10.000000Z"
@@ -2169,6 +2163,15 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "major",
+                        "in": "query",
+                        "description": "科系",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "responses": {
@@ -2204,6 +2207,43 @@
                         }
                     }
                 }
+            }
+        },
+        "/api/user/{id}/comments": {
+            "get": {
+                "tags": [
+                    "Item"
+                ],
+                "summary": "取得商家評價紀錄",
+                "operationId": "f386057e4a1b7b6c0a89a20456bce5db",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": [
+                                        {
+                                            "id": 2,
+                                            "user_id": 2,
+                                            "merchant_id": 2,
+                                            "rate": 5,
+                                            "message": "comment message",
+                                            "created_at": "2021-11-12T15:15:10.000000Z",
+                                            "updated_at": "2021-11-12T15:15:10.000000Z"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },

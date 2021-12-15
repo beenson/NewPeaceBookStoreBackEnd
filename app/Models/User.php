@@ -58,6 +58,10 @@ class User extends Authenticatable implements JWTSubject {
         return $this->hasOne(PhoneVerify::class, 'user_id', 'id')->get()->first();
     }
 
+    public function getMajor() {
+        return $this->belongsTo(Category::class, 'major', 'id')->get()->first();
+    }
+
     public function checkCommentAvailible($orderId) {
         $order = Order::find($orderId);
         if ($order === null) {
