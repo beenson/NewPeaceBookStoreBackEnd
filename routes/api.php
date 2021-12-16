@@ -7,6 +7,7 @@ use App\Http\Controllers\BanRecordController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*header('Access-Control-Allow-Origin: *');
@@ -70,6 +71,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  * )
  */
 /**
+ * 檢舉紀錄
+ * @OA\Tag(
+ *     name="Report",
+ * )
+ */
+/**
  * 標籤
  * @OA\Tag(
  *     name="Tag",
@@ -130,12 +137,19 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/{id}/items', [ItemController::class, 'getUserItems']);
     // Route::get('/{id}/comments', [UserController::class, 'userComments']);
     Route::get('/{id}/merchant_comments', [UserController::class, 'userMerchantComments']);
+    Route::get('/{id}/report', [ReportController::class, 'submitReport']);
 });
 
 Route::group(['prefix' => 'ban_record'], function () {
     Route::get('/', [BanRecordController::class, 'getBanRecords']);
     Route::post('/{id}/update', [BanRecordController::class, 'updateRecord']);
     Route::post('/{id}/delete', [BanRecordController::class, 'deleteRecord']);
+});
+
+Route::group(['prefix' => 'report'], function () {
+    Route::get('/unresolves', [ReportController::class, 'getWaintingResolveReports']);
+    Route::get('/resolves', [ReportController::class, 'getResolvedReports']);
+    Route::get('/{id}/resolve', [ReportController::class, 'resolveReport']);
 });
 
 Route::group(['prefix' => 'tag'], function () {

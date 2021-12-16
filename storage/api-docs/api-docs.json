@@ -1860,6 +1860,196 @@
                 ]
             }
         },
+        "/api/user/{id}/report": {
+            "post": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "檢舉使用者",
+                "operationId": "ae806d5f42511d84617735db8acee4ee",
+                "parameters": [
+                    {
+                        "name": "reason",
+                        "in": "query",
+                        "description": "檢舉類型",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "detail",
+                        "in": "query",
+                        "description": "詳細描述",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "舉報成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "失敗(請求格式錯誤)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "bad request"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "失敗(被舉報者不存在)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "user not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/report/unresolves": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "取得未處理的檢舉紀錄",
+                "operationId": "229fbbfbe1af53b96d1fcb7f66167269",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "reporter": 1,
+                                            "victim": 2,
+                                            "reason": 0,
+                                            "detail": "report detail",
+                                            "status": 0,
+                                            "created_at": "2021-11-12T15:15:10.000000Z",
+                                            "updated_at": "2021-11-12T15:15:10.000000Z"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/report/resolves": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "取得已處理的檢舉紀錄",
+                "operationId": "06047f68de66ee9df87ae38b9bfeed7f",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "reporter": 1,
+                                            "victim": 2,
+                                            "reason": 0,
+                                            "detail": "report detail",
+                                            "status": 1,
+                                            "created_at": "2021-11-12T15:15:10.000000Z",
+                                            "updated_at": "2021-11-12T15:15:10.000000Z"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/report/{id}/resolve": {
+            "post": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "處理檢舉",
+                "operationId": "bcc50292765982927f820e63dd4169a7",
+                "parameters": [
+                    {
+                        "name": "time",
+                        "in": "query",
+                        "description": "懲罰時長(毫秒, 不懲罰=0)",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "處理成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": {
+                                        "id": 1,
+                                        "reporter": 1,
+                                        "victim": 2,
+                                        "reason": 0,
+                                        "detail": "report detail",
+                                        "status": 1,
+                                        "created_at": "2021-11-12T15:15:10.000000Z",
+                                        "updated_at": "2021-11-12T15:15:10.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "失敗(請求格式錯誤)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "bad request"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "失敗(舉報紀錄不存在)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "report not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/tag/search": {
             "get": {
                 "tags": [
