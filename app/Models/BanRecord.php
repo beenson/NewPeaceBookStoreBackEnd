@@ -12,4 +12,13 @@ class BanRecord extends Model
     public function getUser() {
         return $this->belongsTo(User::class, 'user_id', 'id')->first();
     }
+
+    public static function ban(User $user, $time, $reason) {
+        $record = new BanRecord;
+        $record->user_id = $user->id;
+        $record->reason = $reason;
+        $record->duration = time() + $time;
+        $record->save();
+        return $record;
+    }
 }
