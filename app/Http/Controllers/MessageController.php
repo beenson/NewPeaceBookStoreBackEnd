@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -39,7 +40,7 @@ class MessageController extends Controller
         if ($targetUser === null) {
             return response()->json(['status' => 0, 'message' => 'user not found'], 404);
         }
-        return response()->json(['status' => 1, 'data' => $user->getMessages($to)]);
+        return response()->json(['status' => 1, 'data' => $user->getMessages($targetUser)]);
     }
 
     // return user.id

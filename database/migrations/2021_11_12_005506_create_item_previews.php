@@ -14,8 +14,9 @@ class CreateItemPreviews extends Migration
     public function up()
     {
         Schema::create('item_previews', function (Blueprint $table) {
-            $table->string('path')->primary();
+            $table->id();
             $table->unsignedBigInteger('item_id');
+            $table->binary('photo');
             $table->foreign('item_id')->references('id')->on('items');
             $table->timestamps();
         });

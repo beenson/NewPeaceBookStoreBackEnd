@@ -309,6 +309,7 @@ class OrderController extends Controller
         $orderItems = [];
         $totalPrice = 0;
         $items = json_decode(request()->get('items'));
+        $images = json_decode(request()->get('images'));
         foreach($items as $value) {
             $id = $value->id;
             $quantity = $value->quantity;
@@ -320,6 +321,9 @@ class OrderController extends Controller
                 return response()->json(['status' => 0, 'message' => 'item not enough'], 401);
             }
             $totalPrice += $item->price * $quantity;
+        }
+        foreach($images as $image) {
+
         }
         $order = new Order;
         $order->merchat_id = $merchatId;
