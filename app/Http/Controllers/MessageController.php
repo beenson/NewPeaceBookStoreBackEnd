@@ -4,36 +4,47 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class MessageController extends Controller
 {
-    public function sendMessage() {
-        $user = auth()->user();
-        $target = request()->get('chatUserId');
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only(['checkUser']);
+    }
+
+
+    public function postMessage() {
+        $from = request()->get('from');
+        $to = request()->get('to');
         $msg = request()->get('message');
-        if ($target === null || $msg === null) {
+        $fromUser = User::find($from);
+        $toUser = User::find($to);
+        if ($fromUser === null || $toUser === null || $msg === null) {
             return response()->json(['status' => 0, 'message' => 'error Input'], 400);
-        }
-        $targetUser = User::find($target);
-        if ($targetUser === null) {
-            return response()->json(['status' => 0, 'message' => 'chatroom not found'], 404);
         }
         $message = new Message;
         $message->message = $msg;
-        $message->from_user = $user->id;
-        $message->to_user = $targetUser->id;
+        $message->from_user = $fromUser->id;
+        $message->to_user = $toUser->id;
         $message->save();
-        // TODO: 主動通知
         return response()->json(['status' => 1]);
     }
 
     public function getMessage() {
-        $user = auth()->user();
-        $target = request()->get('chatUserId');
-        $targetUser = User::find($target);
+        $from = request()->get('from');
+        $to = request()->get('to');
+        $user = User::find($from);
+        $targetUser = User::find($to);
         if ($targetUser === null) {
-            return response()->json(['status' => 0, 'message' => 'chatroom not found'], 404);
+            return response()->json(['status' => 0, 'message' => 'user not found'], 404);
         }
-        return response()->json(['status' => 1, 'data' => $user->getMessages($targetUser)]);
+        return response()->json(['status' => 1, 'data' => $user->getMessages($to)]);
+    }
+
+    // return user.id
+    public function checkUser() {
+        $user = auth()->user();
+        return response()->json(['status' => 1, 'id' => $user->id]);
     }
 }

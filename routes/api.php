@@ -8,6 +8,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*header('Access-Control-Allow-Origin: *');
@@ -173,6 +174,11 @@ Route::group(['prefix' => 'item'], function () {
     Route::post('/{id}', [ItemController::class, 'getItem']);
     Route::post('/{id}/update', [ItemController::class, 'updateItem']);
     Route::post('/{id}/delete', [ItemController::class, 'deleteItem']);
+});
+Route::group(['prefix' => 'chatroom'], function () {
+    Route::post('/checkUser', [MessageController::class, 'checkUser']);
+    Route::post('/getMessage', [MessageController::class, 'getMessage']);
+    Route::post('/postMessage', [MessageController::class, 'postMessage']);
 });
 
 Route::post('/upload', function () {
