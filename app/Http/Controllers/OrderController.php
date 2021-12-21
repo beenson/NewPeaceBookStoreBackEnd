@@ -48,7 +48,7 @@ class OrderController extends Controller
     /**
      *  @OA\Get(
      *      path="/api/auth/order/{oid}",
-     *      summary="指定訂單紀錄",
+     *      summary="指定訂單詳細紀錄",
      *      tags={"Order"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
@@ -56,14 +56,25 @@ class OrderController extends Controller
      *              mediaType="application/json",
      *              example={
      *                  "status": 1,
-     *                  "data": {
+     *                  "order": {
      *                      "id": 1,
      *                      "user_id": 1,
      *                      "status": 1,
      *                      "total_price": 100,
      *                      "created_at": null,
      *                      "updated_at": null
-     *                  }
+     *                  },
+     *                  "items": {{
+     *                      "id": 1,
+     *                      "owner": 1,
+     *                      "category": 1,
+     *                      "name": "Book Name",
+     *                      "ISBN": "3333-1111-2222-1234",
+     *                      "price": 100,
+     *                      "quantity": 1,
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  }}
      *              }
      *          )
      *      }),
@@ -97,7 +108,7 @@ class OrderController extends Controller
         if ($order->user_id !== $user->id) {
             return response()->json(['status' => 0, 'message' => 'order not found'], 404);
         }
-        return response()->json(['status' => 1, 'data' => $order]);
+        return response()->json(['status' => 1, 'order' => $order, 'items' => $order->getOrderItems()]);
     }
     /**
      *  @OA\Get(
@@ -145,7 +156,7 @@ class OrderController extends Controller
     /**
      *  @OA\Get(
      *      path="/api/user/{id}/order/{oid}",
-     *      summary="會員指定訂單紀錄",
+     *      summary="會員指定訂單詳細紀錄",
      *      tags={"Order"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
@@ -153,14 +164,25 @@ class OrderController extends Controller
      *              mediaType="application/json",
      *              example={
      *                  "status": 1,
-     *                  "data": {
+     *                  "order": {
      *                      "id": 1,
      *                      "user_id": 1,
      *                      "status": 1,
      *                      "total_price": 100,
      *                      "created_at": null,
      *                      "updated_at": null
-     *                  }
+     *                  },
+     *                  "items": {{
+     *                      "id": 1,
+     *                      "owner": 1,
+     *                      "category": 1,
+     *                      "name": "Book Name",
+     *                      "ISBN": "3333-1111-2222-1234",
+     *                      "price": 100,
+     *                      "quantity": 1,
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  }}
      *              }
      *          )
      *      }),
@@ -194,7 +216,7 @@ class OrderController extends Controller
         if ($order->user_id !== $uid) {
             return response()->json(['status' => 0, 'message' => 'order not belongs this user'], 401);
         }
-        return response()->json(['status' => 1, 'data' => $order]);
+        return response()->json(['status' => 1, 'order' => $order, 'items' => $order->getOrderItems()]);
     }
     /**
      *  @OA\Get(
