@@ -16,4 +16,8 @@ class Tag extends Model
     public static function checkDuplicateName($name) {
         return Tag::where('name', $name)->get()->count() > 0;
     }
+
+    public static function getTagByName($name) {
+        return Tag::where('name', $name)->get()->first();
+    }
 }

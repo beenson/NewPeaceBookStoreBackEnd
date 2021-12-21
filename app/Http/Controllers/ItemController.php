@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Item;
+use App\Models\ItemPreview;
+use App\Models\ItemTag;
 use App\Models\Order;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -186,6 +190,24 @@ class ItemController extends Controller
      *              type="integer"
      *          )
      *      ),
+     *      @OA\Parameter(
+     *          name="images",
+     *          in="query",
+     *          description="圖片(json array base64)",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="tags",
+     *          in="query",
+     *          description="標籤(json array base64)",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -213,6 +235,15 @@ class ItemController extends Controller
      *                  "message": "error Input"
      *              }
      *          )
+     *      }),
+     *      @OA\Response(response=404, description="失敗(未知的分類)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "category not found"
+     *              }
+     *          )
      *      })
      *  )
      */
@@ -223,6 +254,8 @@ class ItemController extends Controller
         $ISBN = request()->get('ISBN');
         $price = request()->get('price');
         $quantity = request()->get('quantity');
+        $images = json_decode(request()->get('images'));
+        $tags = json_decode(request()->get('tags'));
         if ($category === null || $name === null || $ISBN === null || $price === null || $quantity === null) {
             return response()->json(['status' => 0, 'message' => 'error Input'], 400);
         }
@@ -230,6 +263,9 @@ class ItemController extends Controller
             return response()->json(['status' => 0, 'message' => 'error Input'], 400);
         }
         // TODO: 檢測Category存在, 設定複數標籤
+        if (Category::find($category) === null) {
+            return response()->json(['status' => 0, 'message' => 'category not found'], 400);
+        }
         $item = new Item;
         $item->category = $category;
         $item->name = $name;
@@ -238,6 +274,24 @@ class ItemController extends Controller
         $item->quantity = $quantity;
         $item->owner = $user->id;
         $item->save();
+        foreach($images as $image) {
+            $preview = new ItemPreview;
+            $preview->item_id = $item->id;
+            $preview->photo = $image;
+            $preview->save();
+        }
+        foreach ($tags as $tagName) {
+            $tag = Tag::getTagByName($tagName);
+            if ($tag === null) {
+                $tag = new Tag;
+                $tag->name = $tagName;
+                $tag->save();
+            }
+            $itemTag = new ItemTag;
+            $itemTag->item_id = $item->id;
+            $itemTag->tag_id = $tag->id;
+            $itemTag->save();
+        }
         return response()->json(['status' => 1, 'data' => $item]);
     }
     /**

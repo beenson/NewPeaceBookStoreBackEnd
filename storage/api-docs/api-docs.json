@@ -1279,6 +1279,24 @@
                         "schema": {
                             "type": "integer"
                         }
+                    },
+                    {
+                        "name": "images",
+                        "in": "query",
+                        "description": "圖片(json array base64)",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "tags",
+                        "in": "query",
+                        "description": "標籤(json array base64)",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
@@ -1310,6 +1328,17 @@
                                 "example": {
                                     "status": 0,
                                     "message": "error Input"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "失敗(未知的分類)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "category not found"
                                 }
                             }
                         }
