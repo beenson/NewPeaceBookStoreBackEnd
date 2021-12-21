@@ -339,7 +339,7 @@ class AuthController extends Controller
      *      tags={"Auth"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Parameter(
-     *          name="phone",
+     *          name="code",
      *          in="query",
      *          description="驗證碼",
      *          required=true,

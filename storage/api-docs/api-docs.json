@@ -321,7 +321,7 @@
                 "operationId": "2ecc089d9963d342bb6b4190ce47fcdc",
                 "parameters": [
                     {
-                        "name": "phone",
+                        "name": "code",
                         "in": "query",
                         "description": "驗證碼",
                         "required": true,
