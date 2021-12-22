@@ -111,9 +111,9 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::get('/comments', [AuthController::class, 'getAuthComments']);
 
-    Route::get('/marchant/manage', [OrderController::class, 'getAuthMerchantOrders']);
-    Route::post('/marchant/manage/{oid}/complete', [OrderController::class, 'completeMerchantOrder']);
-    Route::post('/marchant/manage/{oid}/payment/complete', [OrderController::class, 'completeMerchantOrderPayment']);
+    Route::get('/marchant/orders', [OrderController::class, 'getAuthMerchantOrders']);
+    Route::post('/marchant/order/{oid}/complete', [OrderController::class, 'completeMerchantOrder']);
+    Route::post('/marchant/order/{oid}/payment/complete', [OrderController::class, 'completeMerchantOrderPayment']);
 
     Route::get('/banRecords', [BanRecordController::class, 'getMyBanRecords']);
     Route::get('/items', [ItemController::class, 'getAuthItems']);
