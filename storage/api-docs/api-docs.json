@@ -1817,13 +1817,13 @@
                 ]
             }
         },
-        "/api/auth/marchant/manage": {
+        "/api/auth/marchant/orders": {
             "get": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "商家取得訂單",
-                "operationId": "5d397dec4fffbc23978e84b9ff20981a",
+                "operationId": "b2f21583e2a6c7514c0461c91fb3972d",
                 "responses": {
                     "200": {
                         "description": "成功",
@@ -1863,13 +1863,13 @@
                 ]
             }
         },
-        "/api/auth/marchant/manage/{oid}/payment/complete": {
+        "/api/auth/marchant/order/{oid}/payment/complete": {
             "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "商家手動標示訂單已付款(賣家或管理員可操作)",
-                "operationId": "66eea4671dc0f26e66c66fad007b3fce",
+                "operationId": "1dd232af6a9e26636532694104d475d3",
                 "responses": {
                     "200": {
                         "description": "成功",
@@ -1889,13 +1889,13 @@
                 ]
             }
         },
-        "/api/auth/marchant/manage/{oid}/complete": {
+        "/api/auth/marchant/order/{oid}/complete": {
             "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "商家標示訂單已完成(賣家或管理員可操作)",
-                "operationId": "a98651481ca52cb522609bdd1e936adb",
+                "operationId": "f7930cbe28252224ad4749bc711a4773",
                 "responses": {
                     "200": {
                         "description": "成功",
