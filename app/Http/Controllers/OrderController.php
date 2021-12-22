@@ -251,6 +251,47 @@ class OrderController extends Controller
         return response()->json(['status' => 1, 'data' => $data]);
     }
     /**
+     *  @OA\Get(
+     *      path="/api/auth/marchant/order/{oid}",
+     *      summary="商家取得指定訂單詳細資訊",
+     *      tags={"Order"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "order": {
+     *                      "id": 1,
+     *                      "user_id": 1,
+     *                      "status": 1,
+     *                      "total_price": 100,
+     *                      "created_at": null,
+     *                      "updated_at": null
+     *                  },
+     *                  "items": {{
+     *                      "id": 1,
+     *                      "owner": 1,
+     *                      "category": 1,
+     *                      "name": "Book Name",
+     *                      "ISBN": "3333-1111-2222-1234",
+     *                      "price": 100,
+     *                      "quantity": 1,
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  }}
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function getAuthMerchantOrder() {
+        $user = auth()->user();
+        $oid = request()->route('oid');
+        $order = Order::where('merchant_id', $user->id)->where('id', $oid)->get()->first();
+        return response()->json(['status' => 1, 'order' => $order, 'items' => $order->getOrderItems()]);
+    }
+    /**
      *  @OA\Post(
      *      path="/api/auth/marchant/order/{oid}/payment/complete",
      *      summary="商家手動標示訂單已付款(賣家或管理員可操作)",

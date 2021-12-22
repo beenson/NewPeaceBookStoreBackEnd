@@ -112,6 +112,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('/comments', [AuthController::class, 'getAuthComments']);
 
     Route::get('/marchant/orders', [OrderController::class, 'getAuthMerchantOrders']);
+    Route::get('/marchant/order/{oid}', [OrderController::class, 'getAuthMerchantOrder']);
     Route::post('/marchant/order/{oid}/complete', [OrderController::class, 'completeMerchantOrder']);
     Route::post('/marchant/order/{oid}/payment/complete', [OrderController::class, 'completeMerchantOrderPayment']);
 
