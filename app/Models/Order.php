@@ -34,4 +34,9 @@ class Order extends Model
         }
         return $query->orderBy('id', 'desc')->get();
     }
+
+    public static function getMerchantAllOrders($uid) {
+        $query = Order::where('merchant_id', $uid);
+        return $query->orderBy('id', 'desc')->get();
+    }
 }

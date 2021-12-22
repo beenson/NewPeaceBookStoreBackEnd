@@ -1820,7 +1820,7 @@
         "/api/auth/marchant/orders": {
             "get": {
                 "tags": [
-                    "Auth"
+                    "Order"
                 ],
                 "summary": "商家取得訂單",
                 "operationId": "b2f21583e2a6c7514c0461c91fb3972d",
@@ -1831,17 +1831,7 @@
                             "application/json": {
                                 "example": {
                                     "status": 1,
-                                    "todo": [
-                                        {
-                                            "id": 1,
-                                            "user_id": 1,
-                                            "status": 1,
-                                            "total_price": 100,
-                                            "created_at": null,
-                                            "updated_at": null
-                                        }
-                                    ],
-                                    "done": [
+                                    "data": [
                                         {
                                             "id": 1,
                                             "user_id": 1,
@@ -1866,7 +1856,7 @@
         "/api/auth/marchant/order/{oid}/payment/complete": {
             "post": {
                 "tags": [
-                    "Auth"
+                    "Order"
                 ],
                 "summary": "商家手動標示訂單已付款(賣家或管理員可操作)",
                 "operationId": "1dd232af6a9e26636532694104d475d3",
@@ -1892,7 +1882,7 @@
         "/api/auth/marchant/order/{oid}/complete": {
             "post": {
                 "tags": [
-                    "Auth"
+                    "Order"
                 ],
                 "summary": "商家標示訂單已完成(賣家或管理員可操作)",
                 "operationId": "f7930cbe28252224ad4749bc711a4773",

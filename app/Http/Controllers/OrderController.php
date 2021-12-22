@@ -222,22 +222,14 @@ class OrderController extends Controller
      *  @OA\Get(
      *      path="/api/auth/marchant/orders",
      *      summary="商家取得訂單",
-     *      tags={"Auth"},
+     *      tags={"Order"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              example={
      *                  "status": 1,
-     *                  "todo": {{
-     *                      "id": 1,
-     *                      "user_id": 1,
-     *                      "status": 1,
-     *                      "total_price": 100,
-     *                      "created_at": null,
-     *                      "updated_at": null
-     *                  }},
-     *                  "done": {{
+     *                  "data": {{
      *                      "id": 1,
      *                      "user_id": 1,
      *                      "status": 1,
@@ -252,15 +244,17 @@ class OrderController extends Controller
      */
     public function getAuthMerchantOrders() {
         $user = auth()->user();
-        $todo_orders = Order::getMerchantOrders($user->id);
-        $done_orders = Order::getMerchantOrders($user->id, false);
-        return response()->json(['status' => 1, 'todo' => $todo_orders, 'done' => $done_orders]);
+        $data = Order::getMerchantAllOrders($user->id);
+        //$todo_orders = Order::getMerchantOrders($user->id);
+        //$done_orders = Order::getMerchantOrders($user->id, false);
+        //return response()->json(['status' => 1, 'todo' => $todo_orders, 'done' => $done_orders]);
+        return response()->json(['status' => 1, 'data' => $data]);
     }
     /**
      *  @OA\Post(
      *      path="/api/auth/marchant/order/{oid}/payment/complete",
      *      summary="商家手動標示訂單已付款(賣家或管理員可操作)",
-     *      tags={"Auth"},
+     *      tags={"Order"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
@@ -294,7 +288,7 @@ class OrderController extends Controller
      *  @OA\Post(
      *      path="/api/auth/marchant/order/{oid}/complete",
      *      summary="商家標示訂單已完成(賣家或管理員可操作)",
-     *      tags={"Auth"},
+     *      tags={"Order"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
