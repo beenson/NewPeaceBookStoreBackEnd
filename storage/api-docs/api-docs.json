@@ -1440,7 +1440,7 @@
         "/api/item/{id}/delete": {
             "post": {
                 "tags": [
-                    "Tag"
+                    "Item"
                 ],
                 "summary": "刪除商品 (擁有者&管理員可用)",
                 "operationId": "d3e4b3a4edb8bb9ff01585051728c953",

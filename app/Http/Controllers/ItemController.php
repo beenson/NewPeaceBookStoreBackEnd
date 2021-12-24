@@ -397,7 +397,7 @@ class ItemController extends Controller
      *  @OA\Post(
      *      path="/api/item/{id}/delete",
      *      summary="刪除商品 (擁有者&管理員可用)",
-     *      tags={"Tag"},
+     *      tags={"Item"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
