@@ -13,6 +13,7 @@ class User extends Authenticatable implements JWTSubject {
     public static $BANNED = -1;
     public static $NORMAL = 0;
     public static $PUBLISHING_HOUSE = 0;
+    protected $with =  ['items', 'comments', 'banRecords', 'major', 'banRecords'];
 
     public static function checkAvailible($email, $sid) {
         $user = User::where('email', $email)->first();
@@ -26,11 +27,17 @@ class User extends Authenticatable implements JWTSubject {
         return true;
     }
 
+    public function items() {
+        return $this->hasMany(Item::class, 'owner', 'id');
+    }
     public function getItems() {
         return $this->hasMany(Item::class, 'owner', 'id')->orderBy('updated_at', 'desc')->get();
     }
 
     // 個人發出的評論
+    public function comments() {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
+    }
     public function getComments() {
         return $this->hasMany(Comment::class, 'user_id', 'id')->orderBy('updated_at', 'desc')->get();
     }
@@ -40,10 +47,16 @@ class User extends Authenticatable implements JWTSubject {
         return $this->hasMany(Comment::class, 'merchant_id', 'id')->orderBy('updated_at', 'desc')->get();
     }
 
+    public function orders() {
+        return $this->hasMany(Order::class, 'user_id', 'id');
+    }
     public function getOrders() {
         return $this->hasMany(Order::class, 'user_id', 'id')->orderBy('updated_at', 'desc')->get();
     }
 
+    public function banRecords() {
+        return $this->hasMany(BanRecord::class, 'user_id', 'id');
+    }
     public function getBanRecords() {
         return $this->hasMany(BanRecord::class, 'user_id', 'id')->orderBy('updated_at', 'desc')->get();
     }
@@ -58,6 +71,9 @@ class User extends Authenticatable implements JWTSubject {
         return $this->hasOne(PhoneVerify::class, 'user_id', 'id')->get()->first();
     }
 
+    public function major() {
+        return $this->belongsTo(Category::class, 'major', 'id');
+    }
     public function getMajor() {
         return $this->belongsTo(Category::class, 'major', 'id')->get()->first();
     }

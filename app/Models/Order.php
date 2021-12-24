@@ -8,19 +8,33 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $table = 'orders';
+    protected $with =  ['user', 'orderItems', 'orderPayment', 'comment'];
 
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
     public function getUser() {
         return $this->belongsTo(User::class, 'user_id', 'id')->first();
     }
 
+    public function orderItems() {
+        return $this->hasMany(OrderItem::class, 'order_id', 'id');
+    }
     public function getOrderItems() {
         return $this->hasMany(OrderItem::class, 'order_id', 'id')->get();
     }
 
+    public function orderPayment() {
+        return $this->hasOne(OrderPayment::class, 'order_id', 'id');
+    }
     public function getOrderPayment() {
         return $this->hasOne(OrderPayment::class, 'order_id', 'id')->get()->first();
     }
 
+
+    public function comment() {
+        return $this->hasOne(Comment::class, 'order_id', 'id');
+    }
     public function getComment() {
         return $this->hasOne(Comment::class, 'order_id', 'id')->get()->first();
     }
