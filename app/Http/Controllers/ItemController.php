@@ -53,9 +53,9 @@ class ItemController extends Controller
             return response()->json(['status' => 0, 'message' => 'item not found'], 404);
         }
         // 存量不足
-        if ($item->quantity <= 0) {
+        /*if ($item->quantity <= 0) {
             return response()->json(['status' => 0, 'message' => 'item not enough'], 404);
-        }
+        }*/
         return response()->json(['status' => 1, 'data' => $item]);
     }
     /**
