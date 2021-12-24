@@ -13,7 +13,7 @@ class User extends Authenticatable implements JWTSubject {
     public static $BANNED = -1;
     public static $NORMAL = 0;
     public static $PUBLISHING_HOUSE = 0;
-    protected $with =  ['items', 'comments', 'banRecords', 'major', 'banRecords'];
+    protected $with =  [];
 
     public static function checkAvailible($email, $sid) {
         $user = User::where('email', $email)->first();

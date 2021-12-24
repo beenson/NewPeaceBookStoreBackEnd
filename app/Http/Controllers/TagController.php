@@ -67,26 +67,94 @@ class TagController extends Controller
      *              example={
      *                  "status": 1,
      *                  "data":{{
-     *                      "id": 1,
-     *                      "owner": 1,
-     *                      "category": 1,
-     *                      "name": "Book Name",
-     *                      "ISBN": "3333-1111-2222-1234",
-     *                      "price": 100,
-     *                      "quantity": 1,
-     *                      "created_at": "2021-11-12T15:15:10.000000Z",
-     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
-     *                  },
-     *                  {
      *                      "id": 2,
-     *                      "owner": 2,
-     *                      "category": 2,
+     *                      "owner": {
+     *                          "id": 1,
+     *                          "name": "1",
+     *                          "email": "1",
+     *                          "role": 0,
+     *                          "sid": "3",
+     *                          "major": 1,
+     *                          "remember_token": null,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      },
+     *                      "category": {
+     *                          "id": 1,
+     *                          "name": "category-1",
+     *                          "is_department": true,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      },
      *                      "name": "Book Name2",
-     *                      "ISBN": "7777-1666-5552-4321",
+     *                      "ISBN": "3333-1111-2222-1234",
      *                      "price": 800,
      *                      "quantity": 2,
      *                      "created_at": "2021-11-12T15:15:10.000000Z",
-     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                      "images": {{
+     *                          "id": 1,
+     *                          "item_id": 2,
+     *                          "photo": "(Blob)"
+     *                      }},
+     *                      "tags": {{
+     *                          "id": 1,
+     *                          "tag_id": 1,
+     *                          "item_id": 2,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                          "tag": {
+     *                              "id": 1,
+     *                              "name": "tag-1",
+     *                              "created_at": "2021-11-12T15:15:10.000000Z",
+     *                              "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                          }
+     *                      }}
+     *                  },
+     *                  {
+     *                      "id": 2,
+     *                      "owner": {
+     *                          "id": 2,
+     *                          "name": "222",
+     *                          "email": "1",
+     *                          "role": 0,
+     *                          "sid": "3",
+     *                          "major": 1,
+     *                          "remember_token": null,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      },
+     *                      "category": {
+     *                          "id": 2,
+     *                          "name": "category-2",
+     *                          "is_department": true,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      },
+     *                      "name": "Book Name3",
+     *                      "ISBN": "5555-1111-2222-1234",
+     *                      "price": 400,
+     *                      "quantity": 1,
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                      "images": {{
+     *                          "id": 1,
+     *                          "item_id": 2,
+     *                          "photo": "(Blob)"
+     *                      }},
+     *                      "tags": {{
+     *                          "id": 1,
+     *                          "tag_id": 1,
+     *                          "item_id": 2,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                          "tag": {
+     *                              "id": 1,
+     *                              "name": "tag-1",
+     *                              "created_at": "2021-11-12T15:15:10.000000Z",
+     *                              "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                          }
+     *                      }}
      *                  }}
      *              }
      *          )

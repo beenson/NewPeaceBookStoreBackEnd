@@ -33,7 +33,60 @@ class OrderController extends Controller
      *                          "status": 1,
      *                          "total_price": 100,
      *                          "created_at": null,
-     *                          "updated_at": null
+     *                          "updated_at": null,
+     *
+     *                          "orderItems": {{
+     *                              "id": 1,
+     *                              "order_id": 1,
+     *                              "item_id": 2,
+     *                              "quantity": 10,
+     *                              "price": 10,
+     *                              "item": {
+     *                                  "id": 2,
+     *                                  "owner": {
+     *                                      "id": 1,
+     *                                      "name": "1",
+     *                                      "email": "1",
+     *                                      "role": 0,
+     *                                      "sid": "3",
+     *                                      "major": 1,
+     *                                      "remember_token": null,
+     *                                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                                  },
+     *                                  "category": {
+     *                                      "id": 1,
+     *                                      "name": "category-1",
+     *                                      "is_department": true,
+     *                                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                                  },
+     *                                  "name": "Book Name2",
+     *                                  "ISBN": "3333-1111-2222-1234",
+     *                                  "price": 800,
+     *                                  "quantity": 2,
+     *                                  "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                  "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                                  "images": {{
+     *                                      "id": 1,
+     *                                      "item_id": 2,
+     *                                      "photo": "(Blob)"
+     *                                  }},
+     *                                  "tags": {{
+     *                                      "id": 1,
+     *                                      "tag_id": 1,
+     *                                      "item_id": 2,
+     *                                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                      "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                                      "tag": {
+     *                                          "id": 1,
+     *                                          "name": "tag-1",
+     *                                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                                      }
+     *                                  }}
+     *                              }
+     *                          }}
      *                      }
      *                  }
      *              }
@@ -56,25 +109,66 @@ class OrderController extends Controller
      *              mediaType="application/json",
      *              example={
      *                  "status": 1,
-     *                  "order": {
+     *                  "data": {
      *                      "id": 1,
      *                      "user_id": 1,
      *                      "status": 1,
      *                      "total_price": 100,
      *                      "created_at": null,
-     *                      "updated_at": null
+     *                      "updated_at": null,
+     *                      "orderItems": {{
+     *                          "id": 1,
+     *                          "order_id": 1,
+     *                          "item_id": 2,
+     *                          "quantity": 10,
+     *                          "price": 10,
+     *                          "item": {
+     *                              "id": 2,
+     *                              "owner": {
+     *                                  "id": 1,
+     *                                  "name": "1",
+     *                                  "email": "1",
+     *                                  "role": 0,
+     *                                  "sid": "3",
+     *                                  "major": 1,
+     *                                  "remember_token": null,
+     *                                  "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                  "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                              },
+     *                              "category": {
+     *                                  "id": 1,
+     *                                  "name": "category-1",
+     *                                  "is_department": true,
+     *                                  "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                  "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                              },
+     *                              "name": "Book Name2",
+     *                              "ISBN": "3333-1111-2222-1234",
+     *                              "price": 800,
+     *                              "quantity": 2,
+     *                              "created_at": "2021-11-12T15:15:10.000000Z",
+     *                              "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                              "images": {{
+     *                                  "id": 1,
+     *                                  "item_id": 2,
+     *                                  "photo": "(Blob)"
+     *                              }},
+     *                              "tags": {{
+     *                                  "id": 1,
+     *                                  "tag_id": 1,
+     *                                  "item_id": 2,
+     *                                  "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                  "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                                  "tag": {
+     *                                      "id": 1,
+     *                                      "name": "tag-1",
+     *                                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                                  }
+     *                              }}
+     *                          }
+     *                      }}
      *                  },
-     *                  "items": {{
-     *                      "id": 1,
-     *                      "owner": 1,
-     *                      "category": 1,
-     *                      "name": "Book Name",
-     *                      "ISBN": "3333-1111-2222-1234",
-     *                      "price": 100,
-     *                      "quantity": 1,
-     *                      "created_at": "2021-11-12T15:15:10.000000Z",
-     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
-     *                  }}
      *              }
      *          )
      *      }),
@@ -108,7 +202,7 @@ class OrderController extends Controller
         if ($order->user_id !== $user->id) {
             return response()->json(['status' => 0, 'message' => 'order not found'], 404);
         }
-        return response()->json(['status' => 1, 'order' => $order, 'items' => $order->getOrderItems()]);
+        return response()->json(['status' => 1, 'data' => $order]);
     }
     /**
      *  @OA\Get(
@@ -128,7 +222,60 @@ class OrderController extends Controller
      *                          "status": 1,
      *                          "total_price": 100,
      *                          "created_at": null,
-     *                          "updated_at": null
+     *                          "updated_at": null,
+     *
+     *                          "orderItems": {{
+     *                              "id": 1,
+     *                              "order_id": 1,
+     *                              "item_id": 2,
+     *                              "quantity": 10,
+     *                              "price": 10,
+     *                              "item": {
+     *                                  "id": 2,
+     *                                  "owner": {
+     *                                      "id": 1,
+     *                                      "name": "1",
+     *                                      "email": "1",
+     *                                      "role": 0,
+     *                                      "sid": "3",
+     *                                      "major": 1,
+     *                                      "remember_token": null,
+     *                                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                                  },
+     *                                  "category": {
+     *                                      "id": 1,
+     *                                      "name": "category-1",
+     *                                      "is_department": true,
+     *                                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                                  },
+     *                                  "name": "Book Name2",
+     *                                  "ISBN": "3333-1111-2222-1234",
+     *                                  "price": 800,
+     *                                  "quantity": 2,
+     *                                  "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                  "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                                  "images": {{
+     *                                      "id": 1,
+     *                                      "item_id": 2,
+     *                                      "photo": "(Blob)"
+     *                                  }},
+     *                                  "tags": {{
+     *                                      "id": 1,
+     *                                      "tag_id": 1,
+     *                                      "item_id": 2,
+     *                                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                      "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                                      "tag": {
+     *                                          "id": 1,
+     *                                          "name": "tag-1",
+     *                                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                                      }
+     *                                  }}
+     *                              }
+     *                          }}
      *                      }
      *                  }
      *              }
@@ -164,25 +311,66 @@ class OrderController extends Controller
      *              mediaType="application/json",
      *              example={
      *                  "status": 1,
-     *                  "order": {
+     *                  "data": {
      *                      "id": 1,
      *                      "user_id": 1,
      *                      "status": 1,
      *                      "total_price": 100,
      *                      "created_at": null,
-     *                      "updated_at": null
+     *                      "updated_at": null,
+     *                      "orderItems": {{
+     *                          "id": 1,
+     *                          "order_id": 1,
+     *                          "item_id": 2,
+     *                          "quantity": 10,
+     *                          "price": 10,
+     *                          "item": {
+     *                              "id": 2,
+     *                              "owner": {
+     *                                  "id": 1,
+     *                                  "name": "1",
+     *                                  "email": "1",
+     *                                  "role": 0,
+     *                                  "sid": "3",
+     *                                  "major": 1,
+     *                                  "remember_token": null,
+     *                                  "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                  "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                              },
+     *                              "category": {
+     *                                  "id": 1,
+     *                                  "name": "category-1",
+     *                                  "is_department": true,
+     *                                  "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                  "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                              },
+     *                              "name": "Book Name2",
+     *                              "ISBN": "3333-1111-2222-1234",
+     *                              "price": 800,
+     *                              "quantity": 2,
+     *                              "created_at": "2021-11-12T15:15:10.000000Z",
+     *                              "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                              "images": {{
+     *                                  "id": 1,
+     *                                  "item_id": 2,
+     *                                  "photo": "(Blob)"
+     *                              }},
+     *                              "tags": {{
+     *                                  "id": 1,
+     *                                  "tag_id": 1,
+     *                                  "item_id": 2,
+     *                                  "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                  "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                                  "tag": {
+     *                                      "id": 1,
+     *                                      "name": "tag-1",
+     *                                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                                  }
+     *                              }}
+     *                          }
+     *                      }}
      *                  },
-     *                  "items": {{
-     *                      "id": 1,
-     *                      "owner": 1,
-     *                      "category": 1,
-     *                      "name": "Book Name",
-     *                      "ISBN": "3333-1111-2222-1234",
-     *                      "price": 100,
-     *                      "quantity": 1,
-     *                      "created_at": "2021-11-12T15:15:10.000000Z",
-     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
-     *                  }}
      *              }
      *          )
      *      }),
@@ -216,7 +404,7 @@ class OrderController extends Controller
         if ($order->user_id !== $uid) {
             return response()->json(['status' => 0, 'message' => 'order not belongs this user'], 401);
         }
-        return response()->json(['status' => 1, 'order' => $order, 'items' => $order->getOrderItems()]);
+        return response()->json(['status' => 1, 'data' => $order]);
     }
     /**
      *  @OA\Get(
@@ -229,14 +417,69 @@ class OrderController extends Controller
      *              mediaType="application/json",
      *              example={
      *                  "status": 1,
-     *                  "data": {{
-     *                      "id": 1,
-     *                      "user_id": 1,
-     *                      "status": 1,
-     *                      "total_price": 100,
-     *                      "created_at": null,
-     *                      "updated_at": null
-     *                  }}
+     *                  "data": {
+     *                      {
+     *                          "id": 1,
+     *                          "user_id": 1,
+     *                          "status": 1,
+     *                          "total_price": 100,
+     *                          "created_at": null,
+     *                          "updated_at": null,
+     *
+     *                          "orderItems": {{
+     *                              "id": 1,
+     *                              "order_id": 1,
+     *                              "item_id": 2,
+     *                              "quantity": 10,
+     *                              "price": 10,
+     *                              "item": {
+     *                                  "id": 2,
+     *                                  "owner": {
+     *                                      "id": 1,
+     *                                      "name": "1",
+     *                                      "email": "1",
+     *                                      "role": 0,
+     *                                      "sid": "3",
+     *                                      "major": 1,
+     *                                      "remember_token": null,
+     *                                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                                  },
+     *                                  "category": {
+     *                                      "id": 1,
+     *                                      "name": "category-1",
+     *                                      "is_department": true,
+     *                                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                                  },
+     *                                  "name": "Book Name2",
+     *                                  "ISBN": "3333-1111-2222-1234",
+     *                                  "price": 800,
+     *                                  "quantity": 2,
+     *                                  "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                  "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                                  "images": {{
+     *                                      "id": 1,
+     *                                      "item_id": 2,
+     *                                      "photo": "(Blob)"
+     *                                  }},
+     *                                  "tags": {{
+     *                                      "id": 1,
+     *                                      "tag_id": 1,
+     *                                      "item_id": 2,
+     *                                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                      "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                                      "tag": {
+     *                                          "id": 1,
+     *                                          "name": "tag-1",
+     *                                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                                      }
+     *                                  }}
+     *                              }
+     *                          }}
+     *                      }
+     *                  }
      *              }
      *          )
      *      })
@@ -270,15 +513,49 @@ class OrderController extends Controller
      *                      "updated_at": null
      *                  },
      *                  "items": {{
-     *                      "id": 1,
-     *                      "owner": 1,
-     *                      "category": 1,
-     *                      "name": "Book Name",
+     *                      "id": 2,
+     *                      "owner": {
+     *                          "id": 1,
+     *                          "name": "1",
+     *                          "email": "1",
+     *                          "role": 0,
+     *                          "sid": "3",
+     *                          "major": 1,
+     *                          "remember_token": null,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      },
+     *                      "category": {
+     *                          "id": 1,
+     *                          "name": "category-1",
+     *                          "is_department": true,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      },
+     *                      "name": "Book Name2",
      *                      "ISBN": "3333-1111-2222-1234",
-     *                      "price": 100,
-     *                      "quantity": 1,
+     *                      "price": 800,
+     *                      "quantity": 2,
      *                      "created_at": "2021-11-12T15:15:10.000000Z",
-     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                      "images": {{
+     *                          "id": 1,
+     *                          "item_id": 2,
+     *                          "photo": "(Blob)"
+     *                      }},
+     *                      "tags": {{
+     *                          "id": 1,
+     *                          "tag_id": 1,
+     *                          "item_id": 2,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                          "tag": {
+     *                              "id": 1,
+     *                              "name": "tag-1",
+     *                              "created_at": "2021-11-12T15:15:10.000000Z",
+     *                              "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                          }
+     *                      }}
      *                  }}
      *              }
      *          )
@@ -380,7 +657,7 @@ class OrderController extends Controller
             $totalPrice += $item->price * $quantity;
         }
         foreach($images as $image) {
-
+            // TODO:
         }
         $order = new Order;
         $order->merchat_id = $merchatId;
