@@ -72,7 +72,7 @@ class UserController extends Controller
      *              mediaType="application/json",
      *              example={
      *                  "status": 1,
-     *                  "data": {
+     *                  "user": {
      *                      "id": 1,
      *                      "name": "1",
      *                      "email": "1",
@@ -82,7 +82,10 @@ class UserController extends Controller
      *                      "remember_token": null,
      *                      "created_at": "2021-11-12T15:15:10.000000Z",
      *                      "updated_at": "2021-11-12T15:15:10.000000Z"
-     *                  }
+     *                  },
+     *                  "totalBuyOrders": 10,
+     *                  "totalSellOrders": 10,
+     *                  "rate": 10,
      *              }
      *          )
      *      }),
@@ -103,7 +106,21 @@ class UserController extends Controller
         if ($user === null) {
             return response()->json(['status' => 0, 'message' => 'user not found'], 404);
         }
-        return response()->json(['status' => 1, 'data' => $user]);
+        $totalBuyOrders = $user->getOrders()->count();
+        $totalSellOrders = $user->getMerchantOrders()->count();
+        $totalScore = 0;
+        $comments = $user->getMerchantComments();
+        foreach ($comments as $comment) {
+            $totalScore += $comment->rate;
+        }
+        $score = $totalScore / $comments->count();
+        return response()->json([
+            'status' => 1,
+            'user' => $user,
+            'totalBuyOrders' => $totalBuyOrders,
+            'totalSellOrders' => $totalSellOrders,
+            'rate' => $score
+        ]);
     }
 
     /**

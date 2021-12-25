@@ -54,6 +54,10 @@ class User extends Authenticatable implements JWTSubject {
         return $this->hasMany(Order::class, 'user_id', 'id')->orderBy('updated_at', 'desc')->get();
     }
 
+    public function getMerchantOrders() {
+        return $this->hasMany(Order::class, 'merchant_id', 'id')->orderBy('updated_at', 'desc')->get();
+    }
+
     public function banRecords() {
         return $this->hasMany(BanRecord::class, 'user_id', 'id');
     }

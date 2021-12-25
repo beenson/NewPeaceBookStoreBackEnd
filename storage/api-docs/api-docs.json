@@ -3399,7 +3399,7 @@
                             "application/json": {
                                 "example": {
                                     "status": 1,
-                                    "data": {
+                                    "user": {
                                         "id": 1,
                                         "name": "1",
                                         "email": "1",
@@ -3409,7 +3409,10 @@
                                         "remember_token": null,
                                         "created_at": "2021-11-12T15:15:10.000000Z",
                                         "updated_at": "2021-11-12T15:15:10.000000Z"
-                                    }
+                                    },
+                                    "totalBuyOrders": 10,
+                                    "totalSellOrders": 10,
+                                    "rate": 10
                                 }
                             }
                         }
