@@ -9,6 +9,7 @@ class SMSService {
         for($i=0; $i<6; $i++) {
             $code .= $txt[rand(0, strlen($txt)-1)];
         }
+        return $code;
     }
     public static function sendVerifyMessage($phone, $code) {
         $msg = "牛脾趾書城會員驗證碼: ".$code."";
