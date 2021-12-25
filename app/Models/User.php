@@ -13,7 +13,7 @@ class User extends Authenticatable implements JWTSubject {
     public static $BANNED = -1;
     public static $NORMAL = 0;
     public static $PUBLISHING_HOUSE = 0;
-    protected $with =  [];
+    protected $with =  ['phoneVerify'];
 
     public static function checkAvailible($email, $sid) {
         $user = User::where('email', $email)->first();
@@ -65,6 +65,10 @@ class User extends Authenticatable implements JWTSubject {
         return Message::where('from_user', $this->id)->where('to_user', $targetUser->id)->orWhere(function ($query) use ($targetUser) {
             $query->where('to_user', $this->id)->where('from_user', $targetUser->id);
         })->get();
+    }
+
+    public function phoneVerify() {
+        return $this->hasOne(PhoneVerify::class, 'user_id', 'id');
     }
 
     public function getPhoneVerify() {

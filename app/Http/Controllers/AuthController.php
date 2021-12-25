@@ -55,7 +55,15 @@ class AuthController extends Controller
      *                      "major": 1,
      *                      "remember_token": null,
      *                      "created_at": "2021-11-12T15:15:10.000000Z",
-     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                      "phoneVerify": {
+     *                          "id": 1,
+     *                          "user_id": 1,
+     *                          "status": 0,
+     *                          "code": "xxxxxx",
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      }
      *                  }
      *              }
      *          )
@@ -159,7 +167,15 @@ class AuthController extends Controller
      *                      "major": 1,
      *                      "remember_token": null,
      *                      "created_at": "2021-11-12T15:15:10.000000Z",
-     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                      "phoneVerify": {
+     *                          "id": 1,
+     *                          "user_id": 1,
+     *                          "status": 0,
+     *                          "code": "xxxxxx",
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      }
      *                  }
      *              }
      *          )
@@ -228,7 +244,15 @@ class AuthController extends Controller
      *                  "major": 1,
      *                  "remember_token": null,
      *                  "created_at": "2021-11-12T15:15:10.000000Z",
-     *                  "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                  "phoneVerify": {
+     *                      "id": 1,
+     *                      "user_id": 1,
+     *                      "status": 0,
+     *                      "code": "xxxxxx",
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  }
      *              }
      *          )
      *      }),
