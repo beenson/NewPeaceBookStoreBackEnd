@@ -113,7 +113,7 @@ class UserController extends Controller
         foreach ($comments as $comment) {
             $totalScore += $comment->rate;
         }
-        $score = $totalScore / $comments->count();
+        $score = $totalScore / ($comments->count() == 0 ? 1 : $comments->count());
         return response()->json([
             'status' => 1,
             'user' => $user,
