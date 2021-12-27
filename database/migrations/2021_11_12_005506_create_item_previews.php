@@ -16,10 +16,10 @@ class CreateItemPreviews extends Migration
         Schema::create('item_previews', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('item_id');
-            $table->binary('photo');
             $table->foreign('item_id')->references('id')->on('items');
             $table->timestamps();
         });
+        DB::statement("ALTER TABLE item_previews ADD photo LONGBLOB");
     }
 
     /**
