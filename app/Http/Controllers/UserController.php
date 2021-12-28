@@ -21,9 +21,9 @@ class UserController extends Controller
 
     /**
      *  @OA\Get(
-     *      path="/api/user",
+     *      path="/api/admin/user",
      *      summary="使用者列表",
-     *      tags={"User"},
+     *      tags={"Admin"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
@@ -125,9 +125,9 @@ class UserController extends Controller
 
     /**
      *  @OA\Post(
-     *      path="/api/user",
+     *      path="/api/admin/user",
      *      summary="添加會員",
-     *      tags={"User"},
+     *      tags={"Admin"},
      *      @OA\Parameter(
      *          name="email",
      *          in="query",
@@ -238,9 +238,9 @@ class UserController extends Controller
     }
     /**
      *  @OA\Post(
-     *      path="/api/user/{id}",
+     *      path="/api/admin/user/{id}",
      *      summary="修改會員資訊",
-     *      tags={"User"},
+     *      tags={"Admin"},
      *      @OA\Parameter(
      *          name="password",
      *          in="query",

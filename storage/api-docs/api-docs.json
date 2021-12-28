@@ -3236,13 +3236,13 @@
                 ]
             }
         },
-        "/api/user": {
+        "/api/admin/user": {
             "get": {
                 "tags": [
-                    "User"
+                    "Admin"
                 ],
                 "summary": "使用者列表",
-                "operationId": "dcfdce57c12b8790024f232a8d3d6e1e",
+                "operationId": "02899b72dda7b08a3871f98beacd0cb8",
                 "responses": {
                     "200": {
                         "description": "成功",
@@ -3287,10 +3287,10 @@
             },
             "post": {
                 "tags": [
-                    "User"
+                    "Admin"
                 ],
                 "summary": "添加會員",
-                "operationId": "d09e58c211474a2ec5066f0cf6330a11",
+                "operationId": "fdd23e8f9eee509e824b1a41ce074669",
                 "parameters": [
                     {
                         "name": "email",
@@ -3434,13 +3434,15 @@
                         "bearerAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/admin/user/{id}": {
             "post": {
                 "tags": [
-                    "User"
+                    "Admin"
                 ],
                 "summary": "修改會員資訊",
-                "operationId": "0c3a70ac5b05d1923ee03be654c0c639",
+                "operationId": "39a23ca184bdb20dcc69072fdcc5cce2",
                 "parameters": [
                     {
                         "name": "password",

@@ -124,7 +124,6 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'admin/user'], function () {
     Route::get('/', [UserController::class, 'users']);
     Route::post('/', [UserController::class, 'createUser']);
-    Route::get('/{id}', [UserController::class, 'user']);
     Route::post('/{id}', [UserController::class, 'updateUser']);
 
     Route::get('/{id}/orders', [OrderController::class, 'userOrders']);
