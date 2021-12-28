@@ -130,7 +130,6 @@ Route::group(['prefix' => 'admin/user'], function () {
     Route::get('/{id}/order/{oid}', [OrderController::class, 'userOrder']);
     Route::get('/{id}/banRecords', [BanRecordController::class, 'getBanRecordsByUser']);
     Route::post('/{id}/ban', [BanRecordController::class, 'banUser']);
-    Route::get('/{id}/items', [ItemController::class, 'getUserItems']);
 });
 
 Route::group(['prefix' => 'user'], function () {

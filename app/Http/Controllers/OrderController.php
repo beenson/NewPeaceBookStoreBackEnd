@@ -206,9 +206,9 @@ class OrderController extends Controller
     }
     /**
      *  @OA\Get(
-     *      path="/api/user/{id}/orders",
+     *      path="/api/admin/user/{id}/orders",
      *      summary="會員訂單紀錄",
-     *      tags={"Order"},
+     *      tags={"Admin"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
@@ -302,9 +302,9 @@ class OrderController extends Controller
     }
     /**
      *  @OA\Get(
-     *      path="/api/user/{id}/order/{oid}",
+     *      path="/api/admin/user/{id}/order/{oid}",
      *      summary="會員指定訂單詳細紀錄",
-     *      tags={"Order"},
+     *      tags={"Admin"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(

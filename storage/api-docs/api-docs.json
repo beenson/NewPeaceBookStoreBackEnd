@@ -786,7 +786,7 @@
         "/api/user/{id}/banRecords": {
             "get": {
                 "tags": [
-                    "User"
+                    "Admin"
                 ],
                 "summary": "指定使用者的違規紀錄",
                 "operationId": "ace9350b1170b7f5a81b4ce5ff8be869",
@@ -841,7 +841,7 @@
         "/api/user/{id}/ban": {
             "post": {
                 "tags": [
-                    "User"
+                    "Admin"
                 ],
                 "summary": "封鎖指定使用者",
                 "operationId": "deab4fbbf4f6667e5a458c7973632027",
@@ -2322,13 +2322,13 @@
                 ]
             }
         },
-        "/api/user/{id}/orders": {
+        "/api/admin/user/{id}/orders": {
             "get": {
                 "tags": [
-                    "Order"
+                    "Admin"
                 ],
                 "summary": "會員訂單紀錄",
-                "operationId": "9d7b1a365d25e8b27db78493c077717e",
+                "operationId": "3c9490a37be10606d10c140133640261",
                 "responses": {
                     "200": {
                         "description": "成功",
@@ -2427,13 +2427,13 @@
                 ]
             }
         },
-        "/api/user/{id}/order/{oid}": {
+        "/api/admin/user/{id}/order/{oid}": {
             "get": {
                 "tags": [
-                    "Order"
+                    "Admin"
                 ],
                 "summary": "會員指定訂單詳細紀錄",
-                "operationId": "c1fb86604b998588ddb0a25d88888162",
+                "operationId": "b3163f5e152c2f5ab9c0e27e11334cc6",
                 "responses": {
                     "200": {
                         "description": "成功",

@@ -90,7 +90,7 @@ class BanRecordController extends Controller
      *  @OA\Get(
      *      path="/api/user/{id}/banRecords",
      *      summary="指定使用者的違規紀錄",
-     *      tags={"User"},
+     *      tags={"Admin"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
@@ -139,7 +139,7 @@ class BanRecordController extends Controller
      *  @OA\Post(
      *      path="/api/user/{id}/ban",
      *      summary="封鎖指定使用者",
-     *      tags={"User"},
+     *      tags={"Admin"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Parameter(
      *          name="reason",
