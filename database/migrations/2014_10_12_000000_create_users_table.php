@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->integer('role')->default(0);
             $table->unsignedBigInteger('major');
             $table->string('sid')->unique();
-            $table->string('phone')->unique();
+            $table->string('phone')->unique()->default(null);
             // $table->rememberToken();
             $table->foreign('major')->references('id')->on('categories');
             $table->timestamps();
