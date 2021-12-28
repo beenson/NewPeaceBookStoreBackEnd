@@ -88,7 +88,7 @@ class BanRecordController extends Controller
     }
     /**
      *  @OA\Get(
-     *      path="/api/user/{id}/banRecords",
+     *      path="/api/admin/user/{id}/banRecords",
      *      summary="指定使用者的違規紀錄",
      *      tags={"Admin"},
      *      security={{"bearerAuth":{}}},
@@ -134,6 +134,29 @@ class BanRecordController extends Controller
             return response()->json(['status' => 0, 'message' => 'user not found'], 404);
         }
         return response()->json(['status' => 1, 'data' => $user->getBanRecords() ], 200);
+    }
+
+    /**
+     *  @OA\Post(
+     *      path="/api/admin/user/banRecord/{recordId}/delete",
+     *      summary="撤銷違規紀錄",
+     *      tags={"Admin"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "data":1
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function deleteBanRecord() {
+        $id = request()->route('recordId');
+        BanRecord::destroy($id);
+        return response()->json(['status' => 1, 'data' => $id ], 200);
     }
     /**
      *  @OA\Post(

@@ -783,13 +783,13 @@
                 ]
             }
         },
-        "/api/user/{id}/banRecords": {
+        "/api/admin/user/{id}/banRecords": {
             "get": {
                 "tags": [
                     "Admin"
                 ],
                 "summary": "指定使用者的違規紀錄",
-                "operationId": "ace9350b1170b7f5a81b4ce5ff8be869",
+                "operationId": "3135a671142d1b66d372cdc4b18de47f",
                 "responses": {
                     "200": {
                         "description": "成功",
@@ -826,6 +826,33 @@
                                 "example": {
                                     "status": 0,
                                     "message": "user not found"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/user/banRecord/{recordId}/delete": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "撤銷違規紀錄",
+                "operationId": "35c1406f62fac9fbd35c52b67a4c2d12",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": 1
                                 }
                             }
                         }
