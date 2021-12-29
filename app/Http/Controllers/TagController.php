@@ -9,7 +9,7 @@ class TagController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->only(['createTag', 'deleteTag']);
+        $this->middleware('auth:api')->only(['createTag', 'deleteTag', 'updateTag']);
         $this->middleware('admin')->only(['deleteTag', 'updateTag']);
     }
 
