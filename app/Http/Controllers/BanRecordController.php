@@ -52,7 +52,7 @@ class BanRecordController extends Controller
     }
     /**
      *  @OA\Get(
-     *      path="/api/ban_record",
+     *      path="/api/admin/ban_record",
      *      summary="近三十天的違規紀錄",
      *      tags={"BanRecord"},
      *      security={{"bearerAuth":{}}},
@@ -135,32 +135,9 @@ class BanRecordController extends Controller
         }
         return response()->json(['status' => 1, 'data' => $user->getBanRecords() ], 200);
     }
-
     /**
      *  @OA\Post(
-     *      path="/api/admin/user/banRecord/{recordId}/delete",
-     *      summary="撤銷違規紀錄",
-     *      tags={"Admin"},
-     *      security={{"bearerAuth":{}}},
-     *      @OA\Response(response=200, description="成功",content={
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              example={
-     *                  "status": 1,
-     *                  "data":1
-     *              }
-     *          )
-     *      })
-     *  )
-     */
-    public function deleteBanRecord() {
-        $id = request()->route('recordId');
-        BanRecord::destroy($id);
-        return response()->json(['status' => 1, 'data' => $id ], 200);
-    }
-    /**
-     *  @OA\Post(
-     *      path="/api/user/{id}/ban",
+     *      path="/api/admin/user/{id}/ban",
      *      summary="封鎖指定使用者",
      *      tags={"Admin"},
      *      security={{"bearerAuth":{}}},
@@ -225,13 +202,13 @@ class BanRecordController extends Controller
         $record = new BanRecord;
         $record->user_id = $user->id;
         $record->reason = $reason;
-        $record->duration = $duration;
+        $record->duration = date('Y-m-d H:i:s', $duration);
         $record->save();
         return response()->json(['status' => 1], 200);
     }
     /**
      *  @OA\Post(
-     *      path="/api/ban_record/{id}/update",
+     *      path="/api/admin/ban_record/{id}/update",
      *      summary="修改封鎖紀錄",
      *      tags={"BanRecord"},
      *      security={{"bearerAuth":{}}},
@@ -257,7 +234,15 @@ class BanRecordController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              example={
-     *                  "status": 1
+     *                  "status": 1,
+     *                  "data": {
+     *                      "id": 1,
+     *                      "user_id": 1,
+     *                      "reason": "123456",
+     *                      "duration": "2021-11-12 22:14:56",
+     *                      "created_at": null,
+     *                      "updated_at": null,
+     *                  }
      *              }
      *          )
      *      }),
@@ -296,11 +281,11 @@ class BanRecordController extends Controller
         $record->reason = $reason;
         $record->duration = $duration;
         $record->save();
-        return response()->json(['status' => 1], 200);
+        return response()->json(['status' => 1, 'data' => $record], 200);
     }
     /**
      *  @OA\Post(
-     *      path="/api/ban_record/{id}/delete",
+     *      path="/api/admin/ban_record/{id}/delete",
      *      summary="刪除封鎖紀錄",
      *      tags={"BanRecord"},
      *      security={{"bearerAuth":{}}},

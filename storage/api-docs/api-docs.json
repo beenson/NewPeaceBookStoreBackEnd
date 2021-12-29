@@ -739,13 +739,13 @@
                 ]
             }
         },
-        "/api/ban_record": {
+        "/api/admin/ban_record": {
             "get": {
                 "tags": [
                     "BanRecord"
                 ],
                 "summary": "近三十天的違規紀錄",
-                "operationId": "7f99ccbafa158f2a9afa235a23e541f5",
+                "operationId": "b64adc819279ded9426b0a5f407eb3c6",
                 "responses": {
                     "200": {
                         "description": "成功",
@@ -838,40 +838,13 @@
                 ]
             }
         },
-        "/api/admin/user/banRecord/{recordId}/delete": {
-            "post": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "撤銷違規紀錄",
-                "operationId": "35c1406f62fac9fbd35c52b67a4c2d12",
-                "responses": {
-                    "200": {
-                        "description": "成功",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "status": 1,
-                                    "data": 1
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/user/{id}/ban": {
+        "/api/admin/user/{id}/ban": {
             "post": {
                 "tags": [
                     "Admin"
                 ],
                 "summary": "封鎖指定使用者",
-                "operationId": "deab4fbbf4f6667e5a458c7973632027",
+                "operationId": "e5fd208eebb96328bf25d3286285e40e",
                 "parameters": [
                     {
                         "name": "reason",
@@ -933,13 +906,13 @@
                 ]
             }
         },
-        "/api/ban_record/{id}/update": {
+        "/api/admin/ban_record/{id}/update": {
             "post": {
                 "tags": [
                     "BanRecord"
                 ],
                 "summary": "修改封鎖紀錄",
-                "operationId": "4a867c57ba7cde5465cad9cb13a9ac5e",
+                "operationId": "568c520127c10f395272d3a38e3939dd",
                 "parameters": [
                     {
                         "name": "reason",
@@ -966,7 +939,15 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "status": 1
+                                    "status": 1,
+                                    "data": {
+                                        "id": 1,
+                                        "user_id": 1,
+                                        "reason": "123456",
+                                        "duration": "2021-11-12 22:14:56",
+                                        "created_at": null,
+                                        "updated_at": null
+                                    }
                                 }
                             }
                         }
@@ -1001,13 +982,13 @@
                 ]
             }
         },
-        "/api/ban_record/{id}/delete": {
+        "/api/admin/ban_record/{id}/delete": {
             "post": {
                 "tags": [
                     "BanRecord"
                 ],
                 "summary": "刪除封鎖紀錄",
-                "operationId": "03548f843c6d726a0f1911947298ff42",
+                "operationId": "13ea3ea3c1a7af982b874ed8016e0f6e",
                 "responses": {
                     "200": {
                         "description": "成功",

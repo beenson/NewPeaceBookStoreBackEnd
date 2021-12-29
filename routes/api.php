@@ -129,7 +129,6 @@ Route::group(['prefix' => 'admin/user'], function () {
     Route::get('/{id}/orders', [OrderController::class, 'userOrders']);
     Route::get('/{id}/order/{oid}', [OrderController::class, 'userOrder']);
     Route::get('/{id}/banRecords', [BanRecordController::class, 'getBanRecordsByUser']);
-    Route::post('/banRecord/{recordId}/delete', [BanRecordController::class, 'deleteBanRecord']);
     Route::post('/{id}/ban', [BanRecordController::class, 'banUser']);
 });
 
@@ -141,7 +140,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/{id}/report', [ReportController::class, 'submitReport']);
 });
 
-Route::group(['prefix' => 'ban_record'], function () {
+Route::group(['prefix' => '/admin/ban_record'], function () {
     Route::get('/', [BanRecordController::class, 'getBanRecords']);
     Route::post('/{id}/update', [BanRecordController::class, 'updateRecord']);
     Route::post('/{id}/delete', [BanRecordController::class, 'deleteRecord']);
