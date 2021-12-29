@@ -1224,17 +1224,6 @@
                             }
                         }
                     },
-                    "409": {
-                        "description": "失敗(名稱重複)",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "status": 0,
-                                    "message": "duplicate category name"
-                                }
-                            }
-                        }
-                    },
                     "400": {
                         "description": "失敗(請求格式錯誤)",
                         "content": {

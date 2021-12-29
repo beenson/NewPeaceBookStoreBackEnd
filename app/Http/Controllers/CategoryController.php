@@ -208,15 +208,6 @@ class CategoryController extends Controller
      *              }
      *          )
      *      }),
-     *      @OA\Response(response=409, description="失敗(名稱重複)",content={
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              example={
-     *                  "status": 0,
-     *                  "message": "duplicate category name"
-     *              }
-     *          )
-     *      }),
      *      @OA\Response(response=400, description="失敗(請求格式錯誤)",content={
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -238,9 +229,6 @@ class CategoryController extends Controller
         $is_department = request()->get('is_department');
         if ($name === null || $is_department === null) {
             return response()->json(['status' => 0, 'message' => 'error Input'], 400);
-        }
-        if (Category::checkDuplicateName($name)) {
-            return response()->json(['status' => 0, 'message' => 'duplicate category name'], 409);
         }
         $category->name = $name;
         $category->is_department = $is_department;
