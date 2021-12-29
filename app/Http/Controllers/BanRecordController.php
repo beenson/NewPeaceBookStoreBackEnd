@@ -301,7 +301,8 @@ class BanRecordController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              example={
-     *                  "status": 1
+     *                  "status": 1,
+     *                  "data": 1
      *              }
      *          )
      *      })
@@ -310,6 +311,6 @@ class BanRecordController extends Controller
     public function deleteRecord() {
         $id = request()->route('id');
         BanRecord::destroy($id);
-        return response()->json(['status' => 1], 200);
+        return response()->json(['status' => 1, 'data' => $id], 200);
     }
 }

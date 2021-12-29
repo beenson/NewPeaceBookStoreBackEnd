@@ -1003,7 +1003,8 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "status": 1
+                                    "status": 1,
+                                    "data": 1
                                 }
                             }
                         }
