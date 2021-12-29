@@ -10,7 +10,7 @@ class CategoryController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api')->except(['categorys']);
-        $this->middleware('admin')->only(['createCategory', 'deleteCategory']);
+        $this->middleware('admin')->only(['createCategory', 'deleteCategory', 'updateCategory']);
     }
 
     /**
@@ -162,6 +162,86 @@ class CategoryController extends Controller
             return response()->json(['status' => 0, 'message' => 'duplicate category name'], 409);
         }
         $category = new Category;
+        $category->name = $name;
+        $category->is_department = $is_department;
+        $category->save();
+        return response()->json(['status' => 1, 'data' => $category]);
+    }
+
+
+    /**
+     *  @OA\Post(
+     *      path="/api/category/{id}/update",
+     *      summary="修改分類",
+     *      tags={"Category"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *          name="name",
+     *          in="query",
+     *          description="分類名稱",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="is_department",
+     *          in="query",
+     *          description="是否為科系分類",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="boolean"
+     *          )
+     *      ),
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "data":{
+     *                      "id": 1,
+     *                      "name": "tag-1",
+     *                      "is_department": true,
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  }
+     *              }
+     *          )
+     *      }),
+     *      @OA\Response(response=409, description="失敗(名稱重複)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "duplicate category name"
+     *              }
+     *          )
+     *      }),
+     *      @OA\Response(response=400, description="失敗(請求格式錯誤)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "error Input"
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function updateCategory() {
+        $id = request()->route('id');
+        $category = Category::find($id);
+        if ($category === null) {
+            return response()->json(['status' => 0, 'message' => 'category not found'], 404);
+        }
+        $name = request()->get('name');
+        $is_department = request()->get('is_department');
+        if ($name === null || $is_department === null) {
+            return response()->json(['status' => 0, 'message' => 'error Input'], 400);
+        }
+        if (Category::checkDuplicateName($name)) {
+            return response()->json(['status' => 0, 'message' => 'duplicate category name'], 409);
+        }
         $category->name = $name;
         $category->is_department = $is_department;
         $category->save();

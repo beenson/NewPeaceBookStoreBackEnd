@@ -163,6 +163,7 @@ Route::group(['prefix' => 'category'], function () {
     Route::get('/list', [CategoryController::class, 'categorys']);
     Route::post('/create', [CategoryController::class, 'createCategory']);
     Route::get('/{id}/items', [CategoryController::class, 'getCategoryItems']);
+    Route::post('/{id}/update', [CategoryController::class, 'updateCategory']);
     Route::post('/{id}/delete', [CategoryController::class, 'deleteCategory']);
 });
 
