@@ -163,7 +163,15 @@ class BanRecordController extends Controller
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              example={
-     *                  "status": 1
+     *                  "status": 1,
+     *                  "data": {
+     *                      "id": 1,
+     *                      "user_id": 1,
+     *                      "reason": "123456",
+     *                      "duration": "2021-11-12 22:14:56",
+     *                      "created_at": null,
+     *                      "updated_at": null,
+     *                  }
      *              }
      *          )
      *      }),
@@ -204,7 +212,7 @@ class BanRecordController extends Controller
         $record->reason = $reason;
         $record->duration = date('Y-m-d H:i:s', $duration);
         $record->save();
-        return response()->json(['status' => 1], 200);
+        return response()->json(['status' => 1, 'data' => $record], 200);
     }
     /**
      *  @OA\Post(
@@ -279,7 +287,7 @@ class BanRecordController extends Controller
         }
         // TODO: 檢測duration timestamp
         $record->reason = $reason;
-        $record->duration = $duration;
+        $record->duration = date('Y-m-d H:i:s', $duration);
         $record->save();
         return response()->json(['status' => 1, 'data' => $record], 200);
     }

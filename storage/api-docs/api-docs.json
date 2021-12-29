@@ -871,7 +871,15 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "status": 1
+                                    "status": 1,
+                                    "data": {
+                                        "id": 1,
+                                        "user_id": 1,
+                                        "reason": "123456",
+                                        "duration": "2021-11-12 22:14:56",
+                                        "created_at": null,
+                                        "updated_at": null
+                                    }
                                 }
                             }
                         }
