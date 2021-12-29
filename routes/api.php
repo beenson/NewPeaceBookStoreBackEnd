@@ -156,6 +156,7 @@ Route::group(['prefix' => 'tag'], function () {
     Route::get('/search', [TagController::class, 'searchTags']);
     Route::post('/create', [TagController::class, 'createTag']);
     Route::get('/{id}/items', [TagController::class, 'getRelationItems']);
+    Route::post('/{id}/update', [TagController::class, 'updateTag']);
     Route::post('/{id}/delete', [TagController::class, 'deleteTag']);
 });
 

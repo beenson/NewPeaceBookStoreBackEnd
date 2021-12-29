@@ -10,7 +10,7 @@ class TagController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api')->only(['createTag', 'deleteTag']);
-        $this->middleware('admin')->only(['deleteTag']);
+        $this->middleware('admin')->only(['deleteTag', 'updateTag']);
     }
 
     /**
@@ -233,6 +233,82 @@ class TagController extends Controller
         return response()->json(['status' => 1, 'data' => $tag]);
     }
 
+
+    /**
+     *  @OA\Post(
+     *      path="/api/tag/{id}/update",
+     *      summary="修改標籤",
+     *      tags={"Tag"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *          name="name",
+     *          in="query",
+     *          description="標籤名稱",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "data":{
+     *                      "id": 1,
+     *                      "name": "tag-1",
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  }
+     *              }
+     *          )
+     *      }),
+     *      @OA\Response(response=409, description="失敗(名稱重複)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "duplicate tag name"
+     *              }
+     *          )
+     *      }),
+     *      @OA\Response(response=400, description="失敗(請求格式錯誤)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "error Input"
+     *              }
+     *          )
+     *      }),
+     *      @OA\Response(response=404, description="失敗(標籤不存在)",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 0,
+     *                  "message": "tag not found"
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function updateTag() {
+        $id = request()->route('id');
+        $tag = Tag::find($id);
+        $name = request()->input('name');
+        if ($name === null) {
+            return response()->json(['status' => 0, 'message' => 'error Input'], 400);
+        }
+        if ($tag === null) {
+            return response()->json(['status' => 0, 'message' => 'tag not found'], 404);
+        }
+        if (Tag::checkDuplicateName($name)) {
+            return response()->json(['status' => 0, 'message' => 'duplicate tag name'], 409);
+        }
+        $tag->name = $name;
+        $tag->save();
+        return response()->json(['status' => 1, 'data' => $tag]);
+    }
     /**
      *  @OA\Post(
      *      path="/api/tag/{id}/delete",

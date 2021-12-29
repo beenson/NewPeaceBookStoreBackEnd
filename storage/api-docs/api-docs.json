@@ -3280,6 +3280,82 @@
                 ]
             }
         },
+        "/api/tag/{id}/update": {
+            "post": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "修改標籤",
+                "operationId": "fac876548f030eb36216759cf5974246",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "標籤名稱",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 1,
+                                    "data": {
+                                        "id": 1,
+                                        "name": "tag-1",
+                                        "created_at": "2021-11-12T15:15:10.000000Z",
+                                        "updated_at": "2021-11-12T15:15:10.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "失敗(名稱重複)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "duplicate tag name"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "失敗(請求格式錯誤)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "error Input"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "失敗(標籤不存在)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 0,
+                                    "message": "tag not found"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/tag/{id}/delete": {
             "post": {
                 "tags": [
