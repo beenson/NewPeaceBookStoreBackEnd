@@ -181,10 +181,3 @@ Route::group(['prefix' => 'chatroom'], function () {
     Route::post('/getMessage', [MessageController::class, 'getMessage']);
     Route::post('/postMessage', [MessageController::class, 'postMessage']);
 });
-
-Route::post('/upload', function () {
-    if (request()->hasFile('photo')) {
-        return 1;
-    }
-    return 0;
-});
