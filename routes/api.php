@@ -149,7 +149,7 @@ Route::group(['prefix' => '/admin/ban_record'], function () {
 Route::group(['prefix' => 'report'], function () {
     Route::get('/unresolves', [ReportController::class, 'getWaintingResolveReports']);
     Route::get('/resolves', [ReportController::class, 'getResolvedReports']);
-    Route::get('/{id}/resolve', [ReportController::class, 'resolveReport']);
+    Route::post('/{id}/resolve', [ReportController::class, 'resolveReport']);
 });
 
 Route::group(['prefix' => 'tag'], function () {
