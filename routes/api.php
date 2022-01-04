@@ -172,7 +172,7 @@ Route::group(['prefix' => 'item'], function () {
     Route::get('/search', [ItemController::class, 'searchItems']);
     Route::get('/searchISBN', [ItemController::class, 'getItemsByISBN']);
     Route::post('/create', [ItemController::class, 'createItem']);
-    Route::post('/{id}', [ItemController::class, 'getItem']);
+    Route::get('/{id}', [ItemController::class, 'getItem']);
     Route::post('/{id}/update', [ItemController::class, 'updateItem']);
     Route::post('/{id}/delete', [ItemController::class, 'deleteItem']);
 });
