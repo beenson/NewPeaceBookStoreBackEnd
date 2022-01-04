@@ -629,6 +629,7 @@ class OrderController extends Controller
             return response()->json(['status' => 0, 'message' => 'order not belongs this merchant'], 401);
         }
         $order->status = 2;
+        $order->save();
         return response()->json(['status' => 1]);
     }
     /**
