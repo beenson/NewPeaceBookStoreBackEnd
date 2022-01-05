@@ -178,6 +178,7 @@ Route::group(['prefix' => 'item'], function () {
 });
 Route::group(['prefix' => 'chatroom'], function () {
     Route::post('/checkUser', [MessageController::class, 'checkUser']);
+    Route::post('/messageList', [MessageController::class, 'messageList']);
     Route::post('/getMessage', [MessageController::class, 'getMessage']);
     Route::post('/postMessage', [MessageController::class, 'postMessage']);
 });

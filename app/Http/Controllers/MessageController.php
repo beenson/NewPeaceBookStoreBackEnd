@@ -43,6 +43,26 @@ class MessageController extends Controller
         return response()->json(['status' => 1, 'data' => $user->getMessages($targetUser)]);
     }
 
+    public function messageList() {
+        $userId = request()->get('userId');
+        $user = User::find($userId);
+        $targets = [];
+        $messages = $user->getAllMessages();
+        foreach ($messages as $message) {
+            if ($user->id != $message->from_user) {
+                if (!in_array($message->from_user, $targets)) {
+                    array_push($targets, $message->from_user);
+                }
+            }
+            if ($user->id != $message->to_user) {
+                if (!in_array($message->to_user, $targets)) {
+                    array_push($targets, $message->to_user);
+                }
+            }
+        }
+        return response()->json(['status' => 1, 'data' => $targets]);
+    }
+
     // return user.id
     public function checkUser() {
         $user = auth()->user();
