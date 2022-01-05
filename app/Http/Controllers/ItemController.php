@@ -516,6 +516,7 @@ class ItemController extends Controller
             $itemTag->tag_id = $tag->id;
             $itemTag->save();
         }
+        $item = Item::find($item->id);
         return response()->json(['status' => 1, 'data' => $item]);
     }
     /**
