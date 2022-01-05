@@ -343,6 +343,15 @@ class ItemController extends Controller
      *          )
      *      ),
      *      @OA\Parameter(
+     *          name="catagory",
+     *          in="query",
+     *          description="分類",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Parameter(
      *          name="price",
      *          in="query",
      *          description="價格",
