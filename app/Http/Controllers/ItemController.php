@@ -334,6 +334,15 @@ class ItemController extends Controller
      *          )
      *      ),
      *      @OA\Parameter(
+     *          name="description",
+     *          in="query",
+     *          description="商品簡介",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
      *          name="ISBN",
      *          in="query",
      *          description="ISBN",
@@ -343,7 +352,7 @@ class ItemController extends Controller
      *          )
      *      ),
      *      @OA\Parameter(
-     *          name="catagory",
+     *          name="category",
      *          in="query",
      *          description="分類",
      *          required=true,
@@ -464,6 +473,7 @@ class ItemController extends Controller
         $user = auth()->user();
         $category = request()->get('category');
         $name = request()->get('name');
+        $description = request()->get('description');
         $ISBN = request()->get('ISBN');
         $price = request()->get('price');
         $quantity = request()->get('quantity');
@@ -482,6 +492,7 @@ class ItemController extends Controller
         $item = new Item;
         $item->category = $category;
         $item->name = $name;
+        $item->description = $description;
         $item->ISBN = $ISBN;
         $item->price = $price;
         $item->quantity = $quantity;

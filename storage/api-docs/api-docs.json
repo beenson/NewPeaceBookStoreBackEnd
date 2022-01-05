@@ -1682,6 +1682,15 @@
                         }
                     },
                     {
+                        "name": "description",
+                        "in": "query",
+                        "description": "商品簡介",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "ISBN",
                         "in": "query",
                         "description": "ISBN",
@@ -1691,7 +1700,7 @@
                         }
                     },
                     {
-                        "name": "catagory",
+                        "name": "category",
                         "in": "query",
                         "description": "分類",
                         "required": true,
