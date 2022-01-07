@@ -9,7 +9,7 @@ class TagController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->only(['createTag', 'deleteTag', 'updateTag']);
+        $this->middleware('auth:api')->only(['createTag', 'deleteTag', 'updateTag', 'getTag']);
         $this->middleware('admin')->only(['deleteTag', 'updateTag']);
     }
 
@@ -53,6 +53,37 @@ class TagController extends Controller
         $text = request()->input('text');
         $tags = Tag::where('name', 'LIKE', "%$text%")->get();
         return response()->json(['status' => 1, 'data' => $tags]);
+    }
+
+    /**
+     *  @OA\Get(
+     *      path="/api/tag/{id}",
+     *      summary="搜尋標籤",
+     *      tags={"Tag"},
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "data":
+     *                  {
+     *                      "id": 2,
+     *                      "name": "tag-2",
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                  }
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function getTag() {
+        $id = request()->route('id');
+        $tag = Tag::find($id);
+        if ($tag === null) {
+            return response()->json(['status' => 0, 'message' => 'tag not found'], 404);
+        }
+        return response()->json(['status' => 1, 'data' => $tag]);
     }
 
     /**
