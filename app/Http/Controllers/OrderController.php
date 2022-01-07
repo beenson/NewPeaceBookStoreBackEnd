@@ -634,19 +634,18 @@ class OrderController extends Controller
     }
     /**
      * items = [ // string (json array)
-     *      id: 1,
-     *      amount: 10
+     *      itemId: 1,
+     *      quantity: 10
      * ]
      */
     public function createOrder() {
         $user = auth()->user();
-        $merchatId = request()->get('merchant_id');
+        $merchatId = request()->get('merchantId');
         $orderItems = [];
         $totalPrice = 0;
         $items = json_decode(request()->get('items'));
-        $images = json_decode(request()->get('images'));
         foreach($items as $value) {
-            $id = $value->id;
+            $id = $value->itemId;
             $quantity = $value->quantity;
             $item = Item::find($id);
             if ($item === null) {
@@ -656,9 +655,6 @@ class OrderController extends Controller
                 return response()->json(['status' => 0, 'message' => 'item not enough'], 401);
             }
             $totalPrice += $item->price * $quantity;
-        }
-        foreach($images as $image) {
-            // TODO:
         }
         $order = new Order;
         $order->merchat_id = $merchatId;
