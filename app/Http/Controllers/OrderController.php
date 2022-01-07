@@ -675,6 +675,7 @@ class OrderController extends Controller
             $orderItem->save();
             array_push($orderItems, $orderItem);
         }
-        return response()->json(['status' => 1, 'data' => ['order' => $order, 'orderItems'=> $orderItems]]);
+        $order = Order::find($order->id);
+        return response()->json(['status' => 1, 'data' =>$order]);
     }
 }
