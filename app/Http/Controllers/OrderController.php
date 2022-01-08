@@ -668,7 +668,7 @@ class OrderController extends Controller
         $order->status = 0;
         $order->save();
         foreach($items as $value) {
-            $id = $value->id;
+            $id = $value->itemId;
             $quantity = $value->quantity;
             $item = Item::find($id);
             $item->quantity -= $quantity;
