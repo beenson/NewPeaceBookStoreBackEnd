@@ -479,7 +479,7 @@ class ItemController extends Controller
         $quantity = request()->get('quantity');
         $images = json_decode(request()->get('images'));
         $tags = json_decode(request()->get('tags'));
-        if ($category === null || $name === null || $ISBN === null || $price === null || $quantity === null) {
+        if ($category === null || $name === null || $price === null || $quantity === null) {
             return response()->json(['status' => 0, 'message' => 'error Input'], 400);
         }
         if ($price <= 0 || $quantity <= 0) {
@@ -493,7 +493,11 @@ class ItemController extends Controller
         $item->category = $category;
         $item->name = $name;
         $item->description = $description;
-        $item->ISBN = $ISBN;
+        if ($ISBN !== null) {
+            $item->ISBN = $ISBN;
+        } else {
+            $item->ISBN = "";
+        }
         $item->price = $price;
         $item->quantity = $quantity;
         $item->owner = $user->id;
@@ -640,13 +644,15 @@ class ItemController extends Controller
         $ISBN = request()->get('ISBN');
         $price = request()->get('price');
         $quantity = request()->get('quantity');
-        if ($category === null || $name === null || $ISBN === null || $price === null || $quantity === null) {
+        if ($category === null || $name === null || $price === null || $quantity === null) {
             return response()->json(['status' => 0, 'message' => 'error Input'], 400);
         }
         // TODO: 檢測Category存在, 設定複數標籤
         $item->category = $category;
         $item->name = $name;
-        $item->ISBN = $ISBN;
+        if ($ISBN !== null) {
+            $item->ISBN = $ISBN;
+        }
         $item->price = $price;
         $item->quantity = $quantity;
         $item->save();
