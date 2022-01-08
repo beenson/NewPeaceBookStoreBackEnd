@@ -111,10 +111,10 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::get('/comments', [AuthController::class, 'getAuthComments']);
 
-    Route::get('/marchant/orders', [OrderController::class, 'getAuthMerchantOrders']);
-    Route::get('/marchant/order/{oid}', [OrderController::class, 'getAuthMerchantOrder']);
-    Route::post('/marchant/order/{oid}/complete', [OrderController::class, 'completeMerchantOrder']);
-    Route::post('/marchant/order/{oid}/payment/complete', [OrderController::class, 'completeMerchantOrderPayment']);
+    Route::get('/merchant/orders', [OrderController::class, 'getAuthMerchantOrders']);
+    Route::get('/merchant/order/{oid}', [OrderController::class, 'getAuthMerchantOrder']);
+    Route::post('/merchant/order/{oid}/complete', [OrderController::class, 'completeMerchantOrder']);
+    Route::post('/merchant/order/{oid}/payment/complete', [OrderController::class, 'completeMerchantOrderPayment']);
 
     Route::get('/banRecords', [BanRecordController::class, 'getMyBanRecords']);
     Route::get('/items', [ItemController::class, 'getAuthItems']);

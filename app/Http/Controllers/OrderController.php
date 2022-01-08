@@ -408,7 +408,7 @@ class OrderController extends Controller
     }
     /**
      *  @OA\Get(
-     *      path="/api/auth/marchant/orders",
+     *      path="/api/auth/merchant/orders",
      *      summary="商家取得訂單",
      *      tags={"Order"},
      *      security={{"bearerAuth":{}}},
@@ -495,7 +495,7 @@ class OrderController extends Controller
     }
     /**
      *  @OA\Get(
-     *      path="/api/auth/marchant/order/{oid}",
+     *      path="/api/auth/merchant/order/{oid}",
      *      summary="商家取得指定訂單詳細資訊",
      *      tags={"Order"},
      *      security={{"bearerAuth":{}}},
@@ -570,7 +570,7 @@ class OrderController extends Controller
     }
     /**
      *  @OA\Post(
-     *      path="/api/auth/marchant/order/{oid}/payment/complete",
+     *      path="/api/auth/merchant/order/{oid}/payment/complete",
      *      summary="商家手動標示訂單已付款(賣家或管理員可操作)",
      *      tags={"Order"},
      *      security={{"bearerAuth":{}}},
@@ -604,7 +604,7 @@ class OrderController extends Controller
     }
     /**
      *  @OA\Post(
-     *      path="/api/auth/marchant/order/{oid}/complete",
+     *      path="/api/auth/merchant/order/{oid}/complete",
      *      summary="商家標示訂單已完成(賣家或管理員可操作)",
      *      tags={"Order"},
      *      security={{"bearerAuth":{}}},
