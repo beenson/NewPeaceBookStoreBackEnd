@@ -565,6 +565,15 @@ class ItemController extends Controller
      *              type="integer"
      *          )
      *      ),
+     *      @OA\Parameter(
+     *          name="description",
+     *          in="query",
+     *          description="詳細說明",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
      *      @OA\Response(response=200, description="成功",content={
      *          @OA\MediaType(
      *              mediaType="application/json",
@@ -644,7 +653,8 @@ class ItemController extends Controller
         $ISBN = request()->get('ISBN');
         $price = request()->get('price');
         $quantity = request()->get('quantity');
-        if ($category === null || $name === null || $price === null || $quantity === null) {
+        $description = request()->get('description');
+        if ($category === null || $name === null || $price === null || $quantity === null || $description === null) {
             return response()->json(['status' => 0, 'message' => 'error Input'], 400);
         }
         // TODO: 檢測Category存在, 設定複數標籤
@@ -655,7 +665,9 @@ class ItemController extends Controller
         }
         $item->price = $price;
         $item->quantity = $quantity;
+        $item->description = $description;
         $item->save();
+        $item = $item::find($item);
         return response()->json(['status' => 1, 'data' => $item]);
     }
     /**
