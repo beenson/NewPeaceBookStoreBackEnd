@@ -938,4 +938,227 @@ class ItemController extends Controller
                     ->orderBy('id', 'desc')->get();
         return response()->json(['status' => 1, 'data' => $items]);
     }
+
+    /**
+     *  @OA\Get(
+     *      path="/api/item/newItems",
+     *      summary="最新商品 (取更新時間前16個)",
+     *      tags={"Item"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "data":{{
+     *                      "id": 1,
+     *                      "owner": {
+     *                          "id": 1,
+     *                          "name": "1",
+     *                          "email": "1",
+     *                          "role": 0,
+     *                          "sid": "3",
+     *                          "major": 1,
+     *                          "remember_token": null,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      },
+     *                      "category": {
+     *                          "id": 1,
+     *                          "name": "category-1",
+     *                          "is_department": true,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      },
+     *                      "name": "Book Name",
+     *                      "ISBN": "3333-1111-2222-1234",
+     *                      "price": 100,
+     *                      "quantity": 1,
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                      "images": {{
+     *                          "id": 1,
+     *                          "item_id": 2,
+     *                          "photo": "(Blob)"
+     *                      }},
+     *                      "tags": {{
+     *                          "id": 1,
+     *                          "tag_id": 1,
+     *                          "item_id": 2,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                          "tag": {
+     *                              "id": 1,
+     *                              "name": "tag-1",
+     *                              "created_at": "2021-11-12T15:15:10.000000Z",
+     *                              "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                          }
+     *                      }}
+     *                  },
+     *                  {
+     *                      "id": 2,
+     *                      "owner": {
+     *                          "id": 1,
+     *                          "name": "1",
+     *                          "email": "1",
+     *                          "role": 0,
+     *                          "sid": "3",
+     *                          "major": 1,
+     *                          "remember_token": null,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      },
+     *                      "category": {
+     *                          "id": 1,
+     *                          "name": "category-1",
+     *                          "is_department": true,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      },
+     *                      "name": "Book Name2",
+     *                      "ISBN": "3333-1111-2222-1234",
+     *                      "price": 800,
+     *                      "quantity": 2,
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                      "images": {{
+     *                          "id": 1,
+     *                          "item_id": 2,
+     *                          "photo": "(Blob)"
+     *                      }},
+     *                      "tags": {{
+     *                          "id": 1,
+     *                          "tag_id": 1,
+     *                          "item_id": 2,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                          "tag": {
+     *                              "id": 1,
+     *                              "name": "tag-1",
+     *                              "created_at": "2021-11-12T15:15:10.000000Z",
+     *                              "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                          }
+     *                      }}
+     *                  }}
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function newItems() {
+        $items = Item::orderBy('updated_at', 'desc')->limit(16)->get();
+        return response()->json(['status' => 1, 'data' => $items]);
+    }
+
+    /**
+     *  @OA\Get(
+     *      path="/api/item/hotItems",
+     *      summary="推薦商品 (取同科系、更新時間前4個)",
+     *      tags={"Item"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="成功",content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              example={
+     *                  "status": 1,
+     *                  "data":{{
+     *                      "id": 1,
+     *                      "owner": {
+     *                          "id": 1,
+     *                          "name": "1",
+     *                          "email": "1",
+     *                          "role": 0,
+     *                          "sid": "3",
+     *                          "major": 1,
+     *                          "remember_token": null,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      },
+     *                      "category": {
+     *                          "id": 1,
+     *                          "name": "category-1",
+     *                          "is_department": true,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      },
+     *                      "name": "Book Name",
+     *                      "ISBN": "3333-1111-2222-1234",
+     *                      "price": 100,
+     *                      "quantity": 1,
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                      "images": {{
+     *                          "id": 1,
+     *                          "item_id": 2,
+     *                          "photo": "(Blob)"
+     *                      }},
+     *                      "tags": {{
+     *                          "id": 1,
+     *                          "tag_id": 1,
+     *                          "item_id": 2,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                          "tag": {
+     *                              "id": 1,
+     *                              "name": "tag-1",
+     *                              "created_at": "2021-11-12T15:15:10.000000Z",
+     *                              "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                          }
+     *                      }}
+     *                  },
+     *                  {
+     *                      "id": 2,
+     *                      "owner": {
+     *                          "id": 1,
+     *                          "name": "1",
+     *                          "email": "1",
+     *                          "role": 0,
+     *                          "sid": "3",
+     *                          "major": 1,
+     *                          "remember_token": null,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      },
+     *                      "category": {
+     *                          "id": 1,
+     *                          "name": "category-1",
+     *                          "is_department": true,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                      },
+     *                      "name": "Book Name2",
+     *                      "ISBN": "3333-1111-2222-1234",
+     *                      "price": 800,
+     *                      "quantity": 2,
+     *                      "created_at": "2021-11-12T15:15:10.000000Z",
+     *                      "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                      "images": {{
+     *                          "id": 1,
+     *                          "item_id": 2,
+     *                          "photo": "(Blob)"
+     *                      }},
+     *                      "tags": {{
+     *                          "id": 1,
+     *                          "tag_id": 1,
+     *                          "item_id": 2,
+     *                          "created_at": "2021-11-12T15:15:10.000000Z",
+     *                          "updated_at": "2021-11-12T15:15:10.000000Z",
+     *                          "tag": {
+     *                              "id": 1,
+     *                              "name": "tag-1",
+     *                              "created_at": "2021-11-12T15:15:10.000000Z",
+     *                              "updated_at": "2021-11-12T15:15:10.000000Z"
+     *                          }
+     *                      }}
+     *                  }}
+     *              }
+     *          )
+     *      })
+     *  )
+     */
+    public function hotItems() {
+        $user = auth()->user();
+        $items = Item::where('category', $user->major)->orderBy('updated_at', 'desc')->limit(4)->get();
+        return response()->json(['status' => 1, 'data' => $items]);
+    }
 }

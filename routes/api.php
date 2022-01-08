@@ -170,6 +170,8 @@ Route::group(['prefix' => 'category'], function () {
 });
 
 Route::group(['prefix' => 'item'], function () {
+    Route::get('/hotItems', [ItemController::class, 'hotItems']);
+    Route::get('/newItems', [ItemController::class, 'newItems']);
     Route::get('/search', [ItemController::class, 'searchItems']);
     Route::get('/searchISBN', [ItemController::class, 'getItemsByISBN']);
     Route::post('/create', [ItemController::class, 'createItem']);
