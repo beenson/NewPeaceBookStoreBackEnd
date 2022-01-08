@@ -12,7 +12,7 @@ class User extends Authenticatable implements JWTSubject {
     public static $ADMIN = 1;
     public static $BANNED = -1;
     public static $NORMAL = 0;
-    public static $PUBLISHING_HOUSE = 0;
+    public static $PUBLISHING_HOUSE = 2;
     protected $with =  ['phoneVerify'];
 
     public static function checkAvailible($email, $sid) {
@@ -101,6 +101,34 @@ class User extends Authenticatable implements JWTSubject {
             return false;
         }
         return $order->getComment() === null;
+    }
+
+    public function checkBannedStatus() {
+        $records = $this->getBanRecords();
+        $isBanned = false;
+        foreach ($records as $record) {
+            if (strtotime($record->duration) > time()) {
+                $isBanned = true;
+            }
+        }
+        if ($isBanned && $this->role >= 0) {
+            if ($this->role === User::$NORMAL) {
+                $this->role = -1;
+                $this->save();
+            } else if ($this->role === User::$PUBLISHING_HOUSE) {
+                $this->role = -2;
+                $this->save();
+            }
+            $this->save();
+        } else {
+            if ($this->role === -1) {
+                $this->role = User::$NORMAL;
+                $this->save();
+            } else if ($this->role === -2) {
+                $this->role = User::$PUBLISHING_HOUSE;
+                $this->save();
+            }
+        }
     }
 
     /**

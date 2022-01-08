@@ -18,5 +18,7 @@ class Authenticate extends Middleware
         if (! $request->expectsJson()) {
             throw new HttpResponseException(response()->json(['status' => 0, 'message' => 'Unauthorized'], 401));
         }
+        $user = auth()->user();
+        $user->checkBannedStatus();
     }
 }

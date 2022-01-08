@@ -106,6 +106,7 @@ class UserController extends Controller
         if ($user === null) {
             return response()->json(['status' => 0, 'message' => 'user not found'], 404);
         }
+        $user->checkBannedStatus();
         $totalBuyOrders = $user->getOrders()->count();
         $totalSellOrders = $user->getMerchantOrders()->count();
         $totalScore = 0;
@@ -326,6 +327,7 @@ class UserController extends Controller
             $user->major = $major;
         }
         $user->save();
+        $user->checkBannedStatus();
         return response()->json(['status' => 1, 'data' => $user]);
     }
 
