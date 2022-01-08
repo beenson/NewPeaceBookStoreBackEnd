@@ -22,7 +22,7 @@ class Report extends Model
             $this->save();
             $target = $this->getVictim();
             if ($target !== null) {
-                BanRecord::ban($target, $this->reason, $time);
+                BanRecord::ban($target, $time * 60 * 60 * 24, $this->reason);
             }
         } else {
             $this->status = 2;
