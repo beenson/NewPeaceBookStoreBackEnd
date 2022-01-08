@@ -602,6 +602,8 @@ class OrderController extends Controller
             $payment->status = 1;
             $payment->save();
         }
+        $order->status = 1;
+        $order->save();
         return response()->json(['status' => 1]);
     }
     /**
