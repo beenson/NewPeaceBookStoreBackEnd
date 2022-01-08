@@ -662,7 +662,7 @@ class OrderController extends Controller
             $totalPrice += $item->price * $quantity;
         }
         $order = new Order;
-        $order->merchat_id = $merchatId;
+        $order->merchant_id = $merchatId;
         $order->user_id = $user->id;
         $order->totalPrice = $totalPrice;
         $order->save();
