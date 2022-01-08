@@ -595,11 +595,13 @@ class OrderController extends Controller
             return response()->json(['status' => 0, 'message' => 'order not belongs this merchant'], 401);
         }
         $payment = $order->getOrderPayment();
-        if ($payment === null) {
+        /*if ($payment === null) {
             return response()->json(['status' => 0, 'message' => 'orderPayment not found'], 404);
+        }*/
+        if ($payment !== null) {
+            $payment->status = 1;
+            $payment->save();
         }
-        $payment->status = 1;
-        $payment->save();
         return response()->json(['status' => 1]);
     }
     /**
