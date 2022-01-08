@@ -933,9 +933,9 @@ class ItemController extends Controller
      */
     public function searchItems() {
         $keyword = request()->get('key');
-        $items = Item::where('name', 'LIKE', "%$keyword%")
-                    ->orWhere('ISBN', 'LIKE', "%$keyword%")
-                    ->orderBy('id', 'desc')->get();
+        $items = Item::where('quantity', '>', 0)->where('name', 'LIKE', "%$keyword%")->orWhere(function ($query) use ($keyword) {
+            $query->where('quantity', '>', 0)->where('ISBN', 'LIKE', "%$keyword%");
+        })->orderBy('id', 'desc')->get();
         return response()->json(['status' => 1, 'data' => $items]);
     }
 
@@ -1046,7 +1046,7 @@ class ItemController extends Controller
      *  )
      */
     public function newItems() {
-        $items = Item::orderBy('updated_at', 'desc')->limit(16)->get();
+        $items = Item::where('quantity', '>', 0)->orderBy('updated_at', 'desc')->limit(16)->get();
         return response()->json(['status' => 1, 'data' => $items]);
     }
 
@@ -1158,7 +1158,7 @@ class ItemController extends Controller
      */
     public function hotItems() {
         $user = auth()->user();
-        $items = Item::where('category', $user->major)->orderBy('updated_at', 'desc')->limit(4)->get();
+        $items = Item::where('quantity', '>', 0)->where('category', $user->major)->orderBy('updated_at', 'desc')->limit(4)->get();
         return response()->json(['status' => 1, 'data' => $items]);
     }
 }
