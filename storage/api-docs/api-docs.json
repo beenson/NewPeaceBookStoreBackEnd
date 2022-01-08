@@ -1878,6 +1878,15 @@
                         "schema": {
                             "type": "integer"
                         }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "詳細說明",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
@@ -2949,13 +2958,13 @@
                 ]
             }
         },
-        "/api/auth/marchant/orders": {
+        "/api/auth/merchant/orders": {
             "get": {
                 "tags": [
                     "Order"
                 ],
                 "summary": "商家取得訂單",
-                "operationId": "b2f21583e2a6c7514c0461c91fb3972d",
+                "operationId": "45f688a0eec26855761c9a082bf38916",
                 "responses": {
                     "200": {
                         "description": "成功",
@@ -3043,13 +3052,13 @@
                 ]
             }
         },
-        "/api/auth/marchant/order/{oid}": {
+        "/api/auth/merchant/order/{oid}": {
             "get": {
                 "tags": [
                     "Order"
                 ],
                 "summary": "商家取得指定訂單詳細資訊",
-                "operationId": "339513e05c1c14c9fe12a9b51da55508",
+                "operationId": "203cae96a6123db9b9ec1eac2fec0997",
                 "responses": {
                     "200": {
                         "description": "成功",
@@ -3128,13 +3137,13 @@
                 ]
             }
         },
-        "/api/auth/marchant/order/{oid}/payment/complete": {
+        "/api/auth/merchant/order/{oid}/payment/complete": {
             "post": {
                 "tags": [
                     "Order"
                 ],
                 "summary": "商家手動標示訂單已付款(賣家或管理員可操作)",
-                "operationId": "1dd232af6a9e26636532694104d475d3",
+                "operationId": "1642457312a023b908b9d9554f4a3f45",
                 "responses": {
                     "200": {
                         "description": "成功",
@@ -3154,13 +3163,13 @@
                 ]
             }
         },
-        "/api/auth/marchant/order/{oid}/complete": {
+        "/api/auth/merchant/order/{oid}/complete": {
             "post": {
                 "tags": [
                     "Order"
                 ],
                 "summary": "商家標示訂單已完成(賣家或管理員可操作)",
-                "operationId": "f7930cbe28252224ad4749bc711a4773",
+                "operationId": "a1c5c05ae758ed0cbdb9dafb68e0dbfb",
                 "responses": {
                     "200": {
                         "description": "成功",

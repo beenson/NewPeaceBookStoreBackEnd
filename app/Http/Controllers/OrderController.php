@@ -645,7 +645,7 @@ class OrderController extends Controller
      */
     public function createOrder() {
         $user = auth()->user();
-        $merchatId = request()->get('merchantId');
+        $merchantId = request()->get('merchantId');
         $orderItems = [];
         $totalPrice = 0;
         $items = json_decode(request()->get('items'));
@@ -662,9 +662,10 @@ class OrderController extends Controller
             $totalPrice += $item->price * $quantity;
         }
         $order = new Order;
-        $order->merchant_id = $merchatId;
+        $order->merchant_id = $merchantId;
         $order->user_id = $user->id;
-        $order->totalPrice = $totalPrice;
+        $order->total_price = $totalPrice;
+        $order->status = 0;
         $order->save();
         foreach($items as $value) {
             $id = $value->id;
