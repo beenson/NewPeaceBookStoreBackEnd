@@ -566,7 +566,7 @@ class OrderController extends Controller
         $user = auth()->user();
         $oid = request()->route('oid');
         $order = Order::where('merchant_id', $user->id)->where('id', $oid)->get()->first();
-        return response()->json(['status' => 1, 'order' => $order, 'items' => $order->getOrderItems()]);
+        return response()->json(['status' => 1, 'order' => $order]);
     }
     /**
      *  @OA\Post(
