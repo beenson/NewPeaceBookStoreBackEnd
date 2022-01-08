@@ -137,7 +137,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/{id}/items', [ItemController::class, 'getUserItems']);
     // Route::get('/{id}/comments', [UserController::class, 'userComments']);
     Route::get('/{id}/merchant_comments', [UserController::class, 'userMerchantComments']);
-    Route::get('/{id}/report', [ReportController::class, 'submitReport']);
+    Route::post('/{id}/report', [ReportController::class, 'submitReport']);
 });
 
 Route::group(['prefix' => '/admin/ban_record'], function () {
