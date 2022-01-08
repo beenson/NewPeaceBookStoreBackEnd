@@ -17,7 +17,7 @@ class BanRecord extends Model
         $record = new BanRecord;
         $record->user_id = $user->id;
         $record->reason = $reason;
-        $record->duration = time() + $time;
+        $record->duration = date('Y-m-d H:i:s', time() + $time);
         $record->save();
         return $record;
     }
