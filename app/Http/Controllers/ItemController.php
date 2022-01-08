@@ -667,7 +667,7 @@ class ItemController extends Controller
         $item->quantity = $quantity;
         $item->description = $description;
         $item->save();
-        $item = $item::find($item);
+        $item = $item::find($item->id);
         return response()->json(['status' => 1, 'data' => $item]);
     }
     /**
