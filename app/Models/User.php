@@ -111,7 +111,7 @@ class User extends Authenticatable implements JWTSubject {
                 $isBanned = true;
             }
         }
-        if ($isBanned && $this->role >= 0) {
+        if ($isBanned) {
             if ($this->role === User::$NORMAL) {
                 $this->role = -1;
                 $this->save();
