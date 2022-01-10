@@ -352,6 +352,7 @@ class AuthController extends Controller
         $verify->user_id = $user->id;
         $verify->status = PhoneVerify::$STATUS_BIND_PHONE;
         $verify->code = SMSService::generateRandCode();
+        SMSService::sendVerifyMessage($phone, $verify->code);
         $verify->save();
         $user->save();
         SMSService::sendMessage($phone, '驗證碼: '. $phone);
