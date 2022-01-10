@@ -539,7 +539,7 @@ class AuthController extends Controller
     public function analyticInformation() {
         $user = auth()->user();
         $comments = $user->getMerchantComments();
-        $rates = [0,0,0,0,0];
+        $rates = [0,0,0,0,0,0];
         $totalBuyOrders = $user->getOrders();
         $totalSellOrders = $user->getMerchantOrders();
         foreach ($comments as $comment) {
