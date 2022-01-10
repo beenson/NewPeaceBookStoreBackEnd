@@ -535,6 +535,29 @@ class AuthController extends Controller
         $user = auth()->user();
         return response()->json(['status' => 1, 'data' => $user->getComments()]);
     }
+
+    public function analyticInformation() {
+        $user = auth()->user();
+        $comments = $user->getMerchantComments();
+        $rates = [0,0,0,0,0];
+        $totalBuyOrders = $user->getOrders();
+        $totalSellOrders = $user->getMerchantOrders();
+        foreach ($comments as $comment) {
+            if ($rates[$comment->rate] === null) {
+                $rates[$comment->rate] = 1;
+            } else {
+                $rates[$comment->rate] += 1;
+            }
+        }
+        return response()->json([
+            'status' => 1,
+            'data' => [
+                'rates' => $rates,
+                'buyOrders' => $totalBuyOrders,
+                'sellOrders' => $totalSellOrders,
+            ]
+        ]);
+    }
     /**
      *  @OA\Post(
      *      path="/api/auth/order/{id}/comment",

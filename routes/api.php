@@ -119,6 +119,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('/banRecords', [BanRecordController::class, 'getMyBanRecords']);
     Route::get('/items', [ItemController::class, 'getAuthItems']);
     Route::post('/createOrder', [OrderController::class, 'createOrder']);
+    Route::get('/analytic', [AuthController::class, 'analyticInformation']);
 });
 
 Route::group(['prefix' => 'admin/user'], function () {
