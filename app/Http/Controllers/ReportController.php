@@ -109,7 +109,7 @@ class ReportController extends Controller
      *      })
      *  )
      */
-    public function getWaintingResolveReports() {
+    public function getWaitingResolveReports() {
         $reports = Report::getWaitingResolveReports();
         return response()->json(['status' => 1, 'data' => $reports], 200);
     }
